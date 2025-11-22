@@ -19,6 +19,7 @@ class ActivationController extends Controller
         // Activar cuenta y borrar token
         $user->estado = 'activo';
         $user->token_activacion = null;
+        $user->email_verified_at = now();
         $user->save();
 
         return redirect('/login')->with('success', 'Cuenta activada correctamente.');

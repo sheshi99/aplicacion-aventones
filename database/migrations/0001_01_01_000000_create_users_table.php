@@ -19,13 +19,14 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            //Columnas nuevas:
+            // Columnas nuevas
             $table->enum('rol', ['admin','chofer','pasajero'])->default('pasajero');
             $table->enum('estado', ['pendiente','activo','inactivo'])->default('pendiente');
             $table->string('cedula')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('telefono')->nullable();
             $table->string('fotografia')->nullable();
+            $table->string('token_activacion')->nullable(); // <-- token de activación
             $table->rememberToken();
             $table->timestamps();
         });

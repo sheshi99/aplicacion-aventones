@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\UsuarioRegistrado;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use resources\Http\Controllers\Auth\ActivationController;
+
+
+
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +40,13 @@ class RegisteredUserController extends Controller
             'fotografia' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
 
-        // Crear usuario primero sin foto
+        // Determinar rol automáticamente
+        $rol = Auth::check() ? 'admin' : $request->input('rol', 'pasajero');
+
+        // Generar token de activación solo si no es admin
+        $token = $rol !== 'admin' ? Str::random(64) : null;
+
+        // Crear usuario
         $user = User::create([
             'name' => $request->name,
             'apellido' => $request->apellido,
@@ -42,25 +55,33 @@ class RegisteredUserController extends Controller
             'cedula' => $request->cedula,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'telefono' => $request->telefono,
-            'fotografia' => $request->fotografia,
+            'rol' => $rol,
+            'token_activacion' => $token,
+            'estado' => $rol === 'admin' ? 'activo' : 'pendiente',
         ]);
 
-        // Subir la foto si existe
+        // Subir fotografía
         if ($request->hasFile('fotografia')) {
             $extension = $request->file('fotografia')->getClientOriginalExtension();
-            // Usamos el ID del usuario y su nombre para el archivo
             $nombreArchivo = $user->id . '_' . preg_replace('/\s+/', '_', $user->name) . '.' . $extension;
             $rutaFoto = $request->file('fotografia')->storeAs('usuarios', $nombreArchivo, 'public');
-
-            // Actualizar usuario con la ruta de la foto
             $user->fotografia = $rutaFoto;
             $user->save();
         }
 
+        // Evento de registro
         event(new Registered($user));
 
-        Auth::login($user);
+        // Enviar email si no es admin
+        if ($rol !== 'admin') {
+            Mail::to($user->email)->send(new UsuarioRegistrado($user));
+        }
 
-        return redirect(route('dashboard'));
+        // Login solo si es admin (usuarios pendientes no pueden iniciar sesión)
+        if ($rol === 'admin') {
+            Auth::login($user);
+        }
+
+        return redirect()->route('dashboard')->with('success', 'Registro exitoso. Verifica tu email si no eres admin.');
     }
 }

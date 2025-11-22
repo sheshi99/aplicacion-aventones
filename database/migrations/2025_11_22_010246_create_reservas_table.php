@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('estado', 20)->default('Pendiente');
 
             $table->foreign('id_ride')->references('id_ride')->on('rides');
-            $table->foreign('id_pasajero')->references('id_usuario')->on('usuarios');
+            $table->foreign('id_pasajero')->references('id')->on('users');
         });
     }
 

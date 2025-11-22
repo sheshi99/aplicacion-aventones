@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-    public function register(Request $request){
+    public function registroUsuarios(Request $request){
     $request->validate([
         'nombre' => 'required',
         'apellido' => 'required',
@@ -38,6 +38,7 @@ class UsuarioController extends Controller
         'mensaje' => 'Registrado correctamente',
         'usuario' => $usuario
     ]);
+    
     }
 
 }

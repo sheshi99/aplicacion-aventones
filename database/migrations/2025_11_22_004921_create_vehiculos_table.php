@@ -11,23 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::create('vehiculos', function (Blueprint $table) {
-            $table->bigIncrements('id_vehiculo');
-            $table->unsignedBigInteger('id_chofer');
+        Schema::create('vehiculos', function (Blueprint $table) {
+        $table->bigIncrements('id_vehiculo');
+        $table->unsignedBigInteger('id_chofer');
 
-            $table->string('numero_placa', 20);
-            $table->string('color', 50);
-            $table->string('marca', 50);
-            $table->string('modelo', 50);
-            $table->integer('anno');
-            $table->integer('capacidad_asientos');
-            $table->string('fotografia', 255)->nullable();
+        $table->string('numero_placa', 20);
+        $table->string('color', 50);
+        $table->string('marca', 50);
+        $table->string('modelo', 50);
+        $table->integer('anno');
+        $table->integer('capacidad_asientos');
+        $table->string('fotografia', 255)->nullable();
 
-            // Clave foránea
-            $table->foreign('id_chofer')
-                  ->references('id_usuario')
-                  ->on('usuarios')
-                  ->onDelete('cascade');
+        // Clave foránea
+        $table->foreign('id_chofer')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

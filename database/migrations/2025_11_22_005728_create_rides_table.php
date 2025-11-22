@@ -27,8 +27,8 @@ return new class extends Migration
 
             // Relaciones
             $table->foreign('id_chofer')
-                ->references('id_usuario')
-                ->on('usuarios')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->foreign('id_vehiculo')

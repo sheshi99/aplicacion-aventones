@@ -64,5 +64,35 @@ return [
     'ipv6'                 => 'El campo :attribute debe ser una dirección IPv6 válida.',
     'json'                 => 'El campo :attribute debe ser una cadena JSON válida.',
 
-    // Continúa...
+        'required' => 'El campo :attribute es obligatorio.',
+    'unique' => 'El campo :attribute ya está registrado.',
+    'confirmed' => 'La confirmación de :attribute no coincide.',
+    'max' => [
+        'string' => 'El campo :attribute no debe tener más de :max caracteres.',
+    ],
+    'min' => [
+        'string' => 'El campo :attribute debe tener al menos :min caracteres.',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom validation attributes
+    |--------------------------------------------------------------------------
+    | Aquí puedes renombrar los campos para que el error no diga "email",
+    | sino "correo", etc.
+    |--------------------------------------------------------------------------
+    */
+
+    'attributes' => [
+        'name' => 'nombre',
+        'apellido' => 'apellido',
+        'email' => 'correo electrónico',
+        'password' => 'contraseña',
+        'password_confirmation' => 'confirmación de contraseña',
+        'cedula' => 'cédula',
+        'fecha_nacimiento' => 'fecha de nacimiento',
+        'telefono' => 'teléfono',
+        'fotografia' => 'fotografía',
+        'rol' => 'rol',
+    ],
 ];

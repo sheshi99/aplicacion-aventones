@@ -27,10 +27,10 @@ class RegisteredUserController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'cedula' => ['nullable', 'string', 'max:20'],
-            'fecha_nacimiento' => ['nullable', 'date'],
-            'telefono' => ['nullable', 'string', 'max:20'],
-            'fotografia' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'cedula' => ['required', 'string', 'max:20'],
+            'fecha_nacimiento' => ['required', 'date'],
+            'telefono' => ['required', 'string', 'max:20'],
+            'fotografia' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
 
         // Crear usuario primero sin foto
@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'cedula' => $request->cedula,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'telefono' => $request->telefono,
-            'fotografia' => null,
+            'fotografia' => $request->fotografia,
         ]);
 
         // Subir la foto si existe

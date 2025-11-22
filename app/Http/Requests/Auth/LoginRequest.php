@@ -49,8 +49,27 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // 🟡 Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // 🟠 Validar estado del usuario
+        if ($user->estado === 'pendiente') {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Tu cuenta está pendiente de activación. Revisa tu correo.',
+            ]);
+        }
+
+        if ($user->estado === 'inactivo') {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Tu cuenta está inactiva. Contacta al administrador.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Ensure the login request is not rate limited.

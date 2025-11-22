@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -17,9 +15,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use resources\Http\Controllers\Auth\ActivationController;
 
-
-
-
 class RegisteredUserController extends Controller
 {
     public function create(): View
@@ -32,21 +27,44 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'cedula' => ['required', 'string', 'max:20'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'telefono' => ['required', 'string', 'max:20'],
-            'fotografia' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'cedula' => ['required', 'regex:/^[0-9]{5,}$/'],
+            'fecha_nacimiento' => ['required', 'date', 'before:today'],
+            'telefono' => ['required', 'regex:/^[0-9]{8,}$/'],
+            'fotografia' => [
+                'required',
+                'file',
+                'image',
+                'mimes:jpg,jpeg,png',
+                'max:2048' 
+            ],
+        ], [
+            'cedula.regex' => 'La cédula debe contener al menos 5 números.',
+            'telefono.regex' => 'El teléfono debe contener al menos 8 números.',
+            'fecha_nacimiento.before' => 'La fecha de nacimiento no puede ser futura.',
+            'fotografia.max' => 'La fotografía no debe superar los 2MB.',
+            'fotografia.mimes' => 'Solo se permiten imágenes JPG, JPEG o PNG.',
         ]);
 
-        // Determinar rol automáticamente
-        $rol = Auth::check() ? 'admin' : $request->input('rol', 'pasajero');
+        // VALIDACIÓN DE EDAD SEGÚN ROL
+        $fechaNacimiento = new \DateTime($request->fecha_nacimiento);
+        $edad = (new \DateTime())->diff($fechaNacimiento)->y;
 
-        // Generar token de activación solo si no es admin
-        $token = $rol !== 'admin' ? Str::random(64) : null;
+        $rol = $request->input('rol', 'pasajero');
 
-        // Crear usuario
+        if (in_array($rol, ['chofer', 'admin']) && $edad < 18) {
+            return back()->withErrors([
+                'fecha_nacimiento' => 'Debe tener al menos 18 años para registrarse como ' . $rol
+            ])->withInput();
+        }
+
+        if ($rol === 'pasajero' && $edad < 15) {
+            return back()->withErrors([
+                'fecha_nacimiento' => 'Debe tener al menos 15 años para registrarse como pasajero'
+            ])->withInput();
+        }
+        // CREAR USUARIO
         $user = User::create([
             'name' => $request->name,
             'apellido' => $request->apellido,
@@ -56,32 +74,29 @@ class RegisteredUserController extends Controller
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'telefono' => $request->telefono,
             'rol' => $rol,
-            'token_activacion' => $token,
             'estado' => $rol === 'admin' ? 'activo' : 'pendiente',
+            'token_activacion' => $rol === 'admin' ? null : Str::random(64),
         ]);
 
-        // Subir fotografía
         if ($request->hasFile('fotografia')) {
+
             $extension = $request->file('fotografia')->getClientOriginalExtension();
-            $nombreArchivo = $user->id . '_' . preg_replace('/\s+/', '_', $user->name) . '.' . $extension;
-            $rutaFoto = $request->file('fotografia')->storeAs('usuarios', $nombreArchivo, 'public');
+            $nombreArchivo =
+                $user->id . '_' . preg_replace('/\s+/', '_', $user->name) . '.' . $extension;
+            $rutaFoto = $request->file('fotografia')
+                ->storeAs('usuarios', $nombreArchivo, 'public');
             $user->fotografia = $rutaFoto;
             $user->save();
         }
-
-        // Evento de registro
-        event(new Registered($user));
-
-        // Enviar email si no es admin
+        // ENVIAR EMAIL SI NO ES ADMIN
         if ($rol !== 'admin') {
             Mail::to($user->email)->send(new UsuarioRegistrado($user));
         }
-
-        // Login solo si es admin (usuarios pendientes no pueden iniciar sesión)
+        // INICIAR SESIÓN SI ES ADMIN
         if ($rol === 'admin') {
             Auth::login($user);
         }
-
-        return redirect()->route('dashboard')->with('success', 'Registro exitoso. Verifica tu email si no eres admin.');
+        return redirect()->route('login')
+            ->with('success', 'Registro exitoso. Revisa tu correo para activar tu cuenta.');
     }
 }

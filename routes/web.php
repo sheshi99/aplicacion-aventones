@@ -24,3 +24,19 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
     ->name('activar.cuenta');
 
 require __DIR__.'/auth.php';
+
+
+Route::middleware(['auth', 'rol:admin'])->get('/admin', function() {
+    return "¡Bienvenido al panel de Administrador!";
+})->name('admin.panel');
+
+Route::middleware(['auth', 'rol:chofer'])->get('/chofer', function() {
+    return "¡Bienvenido al panel de Chofer!";
+})->name('chofer.panel');
+
+Route::middleware(['auth', 'rol:pasajero'])->get('/pasajero', function() {
+    return "¡Bienvenido al panel de Pasajero!";
+})->name('pasajero.panel');
+
+
+

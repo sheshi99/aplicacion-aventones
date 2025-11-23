@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ActivationController; // Importa tu controlador de activación
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
+use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,17 +29,9 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
 require __DIR__.'/auth.php';
 
 
-Route::middleware(['auth', 'rol:admin'])->get('/admin', function() {
-    return "¡Bienvenido al panel de Administrador!";
-})->name('admin.panel');
+Route::middleware(['auth','rol:admin'])->get('/admin', [AdminDashboard::class, 'index'])->name('admin.panel');
 
-Route::middleware(['auth', 'rol:chofer'])->get('/chofer', function() {
-    return "¡Bienvenido al panel de Chofer!";
-})->name('chofer.panel');
+Route::middleware(['auth','rol:chofer'])->get('/chofer', [ChoferDashboard::class, 'index'])->name('chofer.panel');
 
-Route::middleware(['auth', 'rol:pasajero'])->get('/pasajero', function() {
-    return "¡Bienvenido al panel de Pasajero!";
-})->name('pasajero.panel');
-
-
+Route::middleware(['auth','rol:pasajero'])->get('/pasajero', [PasajeroDashboard::class, 'index'])->name('pasajero.panel');
 

@@ -36,11 +36,21 @@ class VehiculoController extends Controller
             'fotografia' => 'nullable|image|max:2048',
         ]);
 
-        $foto = null;
-        if ($request->hasFile('fotografia')) {
-            $foto = $request->file('fotografia')->store('vehiculos', 'public');
-        }
+         $foto = null;
 
+        if ($request->hasFile('fotografia')) {
+            $archivo = $request->file('fotografia');
+
+            // Nombre archivo: placa_marca_modelo.extension
+            $nombreArchivo = preg_replace('/[^A-Za-z0-9]/', '', $request->numero_placa)
+                            . '_' . preg_replace('/[^A-Za-z0-9]/', '', $request->marca)
+                            . '_' . preg_replace('/[^A-Za-z0-9]/', '', $request->modelo)
+                            . '.' . $archivo->getClientOriginalExtension();
+
+            // Guardar en storage/app/public/vehiculos
+            $foto = $archivo->storeAs('vehiculos', $nombreArchivo, 'public');
+        }
+        
         Vehiculo::create([
             'id_chofer' => auth()->id(),
             'numero_placa' => $request->numero_placa,
@@ -78,10 +88,27 @@ class VehiculoController extends Controller
             'fotografia' => 'nullable|image|max:2048',
         ]);
 
-        $foto = $vehiculo->fotografia;
+        $foto = $vehiculo->fotografia; // foto actual
 
         if ($request->hasFile('fotografia')) {
-            $foto = $request->file('fotografia')->store('vehiculos', 'public');
+            $archivo = $request->file('fotografia');
+
+            // Nombre nuevo: placa_marca_modelo.extension
+            $nombreArchivo = preg_replace('/[^A-Za-z0-9]/', '', $request->numero_placa)
+                            . '_' . preg_replace('/[^A-Za-z0-9]/', '', $request->marca)
+                            . '_' . preg_replace('/[^A-Za-z0-9]/', '', $request->modelo)
+                            . '.' . $archivo->getClientOriginalExtension();
+
+            // Guardar la nueva foto
+            $ruta = $archivo->storeAs('vehiculos', $nombreArchivo, 'public');
+
+            // Si la foto se guardó correctamente, borrar la anterior
+            if ($ruta) {
+                if ($vehiculo->fotografia && \Storage::disk('public')->exists($vehiculo->fotografia)) {
+                    \Storage::disk('public')->delete($vehiculo->fotografia);
+                }
+                $foto = $ruta;
+            }
         }
 
         $vehiculo->update([

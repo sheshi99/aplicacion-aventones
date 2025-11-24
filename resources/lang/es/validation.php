@@ -68,10 +68,13 @@ return [
     'unique' => 'El campo :attribute ya está registrado.',
     'confirmed' => 'La confirmación de :attribute no coincide.',
     'max' => [
-        'string' => 'El campo :attribute no debe tener más de :max caracteres.',
+        'string'  => 'El campo :attribute no debe tener más de :max caracteres.',
+        'numeric' => 'El campo :attribute no puede ser mayor a :max.',  // para año y capacidad
     ],
+
     'min' => [
-        'string' => 'El campo :attribute debe tener al menos :min caracteres.',
+        'string'  => 'El campo :attribute debe tener al menos :min caracteres.',
+        'numeric' => 'El campo :attribute no puede ser menor a :min.',  // para año y capacidad
     ],
 
     /*
@@ -94,5 +97,6 @@ return [
         'telefono' => 'teléfono',
         'fotografia' => 'fotografía',
         'rol' => 'rol',
+        'anno' => 'año',
     ],
 ];

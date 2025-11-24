@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Chofer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
+use Illuminate\Validation\Rule;
+
 
 class VehiculoController extends Controller
 {
@@ -25,12 +27,12 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'numero_placa' => 'required|max:20',
+            'numero_placa' => 'required|max:20|unique:vehiculos,numero_placa',
             'color' => 'required|max:50',
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
             'anno' => 'required|integer|min:1900|max:' . date('Y'),
-            'capacidad_asientos' => 'required|integer|min:1|max:60',
+            'capacidad_asientos' => 'required|integer|min:2|max:7',
             'fotografia' => 'nullable|image|max:2048',
         ]);
 
@@ -63,12 +65,16 @@ class VehiculoController extends Controller
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $request->validate([
-            'numero_placa' => 'required|max:20',
+            'numero_placa' => [
+                'required',
+                'max:20',
+                Rule::unique('vehiculos', 'numero_placa')->ignore($vehiculo->id_vehiculo, 'id_vehiculo'),
+            ],
             'color' => 'required|max:50',
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
             'anno' => 'required|integer|min:1900|max:' . date('Y'),
-            'capacidad_asientos' => 'required|integer|min:1|max:60',
+            'capacidad_asientos' => 'required|integer|min:2|max:7',
             'fotografia' => 'nullable|image|max:2048',
         ]);
 

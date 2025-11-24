@@ -26,6 +26,7 @@
                         <h5 class="card-title">{{ $vehiculo->marca }} - {{ $vehiculo->modelo }}</h5>
                         <p class="mb-1"><strong>Placa:</strong> {{ $vehiculo->numero_placa }}</p>
                         <p class="mb-1"><strong>Año:</strong> {{ $vehiculo->anno }}</p>
+                         <p class="mb-1"><strong>Asientos:</strong> {{ $vehiculo->capacidad_asientos }}</p>
                         <p class="mb-1"><strong>Color:</strong> {{ $vehiculo->color }}</p>
 
                         <div class="mt-3 d-flex justify-content-between">

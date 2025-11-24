@@ -98,5 +98,6 @@ return [
         'fotografia' => 'fotografía',
         'rol' => 'rol',
         'anno' => 'año',
+        
     ],
 ];

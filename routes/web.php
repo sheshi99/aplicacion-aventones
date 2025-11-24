@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ActivationController; // Importa tu controlador de
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
+use App\Http\Controllers\Chofer\VehiculoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

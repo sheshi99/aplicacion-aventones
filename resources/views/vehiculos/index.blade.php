@@ -30,11 +30,13 @@
 
                         <div class="mt-3 d-flex justify-content-between">
 
-                            <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm">
+                            <!-- Editar usando Route Model Binding -->
+                            <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-warning btn-sm">
                                 ✏ Editar
                             </a>
 
-                            <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este vehículo?')">
+                            <!-- Eliminar usando Route Model Binding -->
+                            <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" onsubmit="return confirm('¿Eliminar este vehículo?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">🗑 Eliminar</button>

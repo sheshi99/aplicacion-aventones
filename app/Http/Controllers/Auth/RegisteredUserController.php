@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
                 'max:2048' 
             ],
         ], [
-            'cedula.regex' => 'La cédula debe contener al menos 5 números.',
+            'cedula.regex' => 'La cédula debe contener al menos 9 números.',
             'telefono.regex' => 'El teléfono debe contener al menos 8 números.',
             'fecha_nacimiento.before' => 'La fecha de nacimiento no puede ser futura.',
             'fotografia.max' => 'La fotografía no debe superar los 2MB.',

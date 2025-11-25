@@ -39,7 +39,7 @@ class ProfileController extends Controller
         if ($request->hasFile('fotografia')) {
             $archivo = $request->file('fotografia');
             $baseRuta = 'usuarios/';
-            $rolRuta = $baseRuta . strtolower($user->rol) . '/';
+            $rolRuta = $baseRuta . '/';
 
             if (!is_dir(public_path($rolRuta))) {
                 mkdir(public_path($rolRuta), 0777, true);

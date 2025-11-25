@@ -39,7 +39,8 @@ class AuthenticatedSessionController extends Controller
                     return redirect()->route('pasajero.panel');
                 default:
                     Auth::logout();
-                    return redirect('/login')->with('error', 'Rol no reconocido.');
+                    return redirect('/login')->with('error', 
+                                                   'Rol no reconocido.');
         }
     }
 

@@ -8,7 +8,7 @@ class vehiculo extends Model
 {
     protected $table = 'vehiculos';
     protected $primaryKey = 'id_vehiculo';
-    public $timestamps = false; 
+    public $timestamps = true; 
 
     protected $fillable = [
         'id_chofer',
@@ -21,8 +21,10 @@ class vehiculo extends Model
         'fotografia'
     ];
 
+
     public function chofer()
     {
         return $this->belongsTo(Usuario::class, 'id_chofer', 'id_usuario');
     }
+    
 }

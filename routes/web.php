@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ActivationController; // Importa tu controlador de
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
+use App\Http\Controllers\Chofer\VehiculoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,7 +20,6 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Ruta para activar la cuenta mediante token (publica)
@@ -31,7 +31,31 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth','rol:admin'])->get('/admin', [AdminDashboard::class, 'index'])->name('admin.panel');
 
-Route::middleware(['auth','rol:chofer'])->get('/chofer', [ChoferDashboard::class, 'index'])->name('chofer.panel');
-
 Route::middleware(['auth','rol:pasajero'])->get('/pasajero', [PasajeroDashboard::class, 'index'])->name('pasajero.panel');
 
+// Rutas exclusivas para CHOFER
+Route::middleware(['auth', 'rol:chofer'])->group(function () {
+
+    Route::get('/chofer', [ChoferDashboard::class, 'index'])
+        ->name('chofer.panel');
+
+    // CRUD Vehículos
+    Route::get('/vehiculos', [VehiculoController::class, 'index'])
+        ->name('vehiculos.index');
+
+    Route::get('/vehiculos/create', [VehiculoController::class, 'create'])
+        ->name('vehiculos.create');
+
+    Route::post('/vehiculos', [VehiculoController::class, 'store'])
+        ->name('vehiculos.store');
+
+    Route::get('/vehiculos/{vehiculo}/edit', [VehiculoController::class, 'edit'])
+        ->name('vehiculos.edit');
+
+    Route::put('/vehiculos/{vehiculo}', [VehiculoController::class, 'update'])
+        ->name('vehiculos.update');
+
+    Route::delete('/vehiculos/{vehiculo}', [VehiculoController::class, 'destroy'])
+        ->name('vehiculos.destroy');
+
+});

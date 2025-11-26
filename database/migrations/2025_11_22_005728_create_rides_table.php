@@ -9,12 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('rides', function (Blueprint $table) {
-            $table->bigIncrements('id_ride');
+            $table->id('id_ride'); // BIGINT UNSIGNED
 
+            // FK a usuarios (chofer)
             $table->unsignedBigInteger('id_chofer');
+
+            // FK a vehiculos
             $table->unsignedBigInteger('id_vehiculo');
 
             $table->string('nombre', 100);
@@ -25,7 +28,13 @@ return new class extends Migration
             $table->decimal('costo', 10, 2);
             $table->integer('espacios');
 
-            // Relaciones
+            // Datos del vehículo en el momento del ride
+            $table->string('vehiculo_placa', 20);
+            $table->string('vehiculo_marca', 50);
+            $table->string('vehiculo_modelo', 50);
+            $table->integer('vehiculo_anio');
+
+            // ===== FOREIGN KEYS =====
             $table->foreign('id_chofer')
                 ->references('id')
                 ->on('users')
@@ -37,6 +46,7 @@ return new class extends Migration
                 ->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

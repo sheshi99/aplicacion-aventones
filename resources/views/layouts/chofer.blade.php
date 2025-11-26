@@ -15,7 +15,7 @@
         <nav class="nav flex-column">
             <a class="nav-link text-white" href="{{ route('chofer.panel') }}">Dashboard</a>
              <a class="nav-link text-white" href="{{ route('vehiculos.index') }}">Mis Vehículos</a>
-            <a class="nav-link text-white" href="#">Mis Rides</a>
+            <a class="nav-link text-white" href="{{ route('rides.index') }}">Mis Rides</a>
             <a class="nav-link text-white" href="#">Mis Reservas</a>
             <a class="nav-link text-white" href="{{ route('profile.edit') }}">Perfil</a>
             <a class="nav-link text-white" href="{{ route('logout') }}"

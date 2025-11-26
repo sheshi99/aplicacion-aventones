@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class rides extends Model
+class Ride extends Model
 {
      protected $table = 'rides';
     protected $primaryKey = 'id_ride';
@@ -28,15 +28,14 @@ class rides extends Model
 
     // ========= RELACIONES =========
 
-    // Un ride pertenece a un chofer (usuario)
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculo::class, 'id_vehiculo', 'id_vehiculo');
+    }
+
     public function chofer()
     {
         return $this->belongsTo(User::class, 'id_chofer', 'id');
     }
 
-    // Un ride pertenece a un vehículo
-    public function vehiculo()
-    {
-        return $this->belongsTo(Vehiculo::class, 'id_vehiculo', 'id_vehiculo');
-    }
 }

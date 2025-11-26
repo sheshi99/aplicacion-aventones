@@ -58,4 +58,24 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
     Route::delete('/vehiculos/{vehiculo}', [VehiculoController::class, 'destroy'])
         ->name('vehiculos.destroy');
 
+    /* ============================
+       CRUD RIDES
+    ============================ */
+    Route::get('/rides', [RideController::class, 'index'])
+        ->name('rides.index');
+
+    Route::get('/rides/create', [RideController::class, 'create'])
+        ->name('rides.create');
+
+    Route::post('/rides', [RideController::class, 'store'])
+        ->name('rides.store');
+
+    Route::get('/rides/{ride}/edit', [RideController::class, 'edit'])
+        ->name('rides.edit');
+
+    Route::put('/rides/{ride}', [RideController::class, 'update'])
+        ->name('rides.update');
+
+    Route::delete('/rides/{ride}', [RideController::class, 'destroy'])
+        ->name('rides.destroy');   
 });

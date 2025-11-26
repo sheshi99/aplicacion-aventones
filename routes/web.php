@@ -29,7 +29,19 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
 require __DIR__.'/auth.php';
 
 
-Route::middleware(['auth','rol:admin'])->get('/admin', [AdminDashboard::class, 'index'])->name('admin.panel');
+// RUTAS EXCLUSIVAS PARA ADMIN
+Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
+
+    // Dashboard del administrador
+    Route::get('/', [AdminDashboard::class, 'index'])
+        ->name('admin.panel');
+
+    // Cambiar estado de usuarios (activar / desactivar)
+    Route::patch('/usuarios/{id}/estado', [AdminDashboard::class, 'cambiarEstado'])
+        ->name('admin.usuarios.estado');
+
+});
+
 
 Route::middleware(['auth','rol:pasajero'])->get('/pasajero', [PasajeroDashboard::class, 'index'])->name('pasajero.panel');
 

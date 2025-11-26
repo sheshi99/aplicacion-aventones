@@ -12,8 +12,7 @@
     <div class="bg-primary text-white p-4" style="width: 250px;">
         <h2>Admin Panel</h2>
         <nav class="nav flex-column">
-            <a class="nav-link text-white" href="{{ route('admin.panel') }}">Dashboard</a>
-            <a class="nav-link text-white" href="#">Usuarios</a>
+            <a class="nav-link text-white" href="{{route('admin.panel') }}">Usuarios</a>
             <a class="nav-link text-white" href="{{ route('profile.edit') }}">Perfil</a>
             <a class="nav-link text-white" href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

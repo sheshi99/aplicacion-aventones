@@ -71,7 +71,7 @@ class VehiculoController extends Controller
     }
 
 
-     // GUARDAR EN BD
+    // CREAR VEHICULO
     public function store(Request $request)
     {
         $request->merge(['numero_placa' => strtoupper($request->numero_placa)]);
@@ -100,7 +100,7 @@ class VehiculoController extends Controller
         return view('vehiculos.edit', compact('vehiculo'));
     }
 
-    // GUARDAR EN BD
+    // EDITAR VEHICULO
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $request->merge(['numero_placa' => strtoupper($request->numero_placa)]);
@@ -122,7 +122,7 @@ class VehiculoController extends Controller
         return redirect()->route('vehiculos.index')->with('success', 'Vehículo actualizado');
     }
 
-    // ELIMINAR
+    // ELIMINAR VEHICULO
     public function destroy(Vehiculo $vehiculo)
     {
         $vehiculo->delete();

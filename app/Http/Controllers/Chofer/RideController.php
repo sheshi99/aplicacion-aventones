@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Chofer;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RideRequest;
 use App\Models\Ride;
 use App\Models\Vehiculo;
 
@@ -21,7 +21,7 @@ class RideController extends Controller
         return view('rides.create', compact('vehiculos'));
     }
 
-    public function store(Request $request)
+    public function store(RideRequest $request)
     {
         $vehiculo = Vehiculo::find($request->id_vehiculo);
 
@@ -52,9 +52,8 @@ class RideController extends Controller
         return view('rides.edit', compact('ride', 'vehiculos'));
     }
 
-    public function update(Request $request, $id_ride)
+    public function update(RideRequest $request, Ride $ride)
     {
-        $ride = Ride::findOrFail($id_ride);
         $vehiculo = Vehiculo::find($request->id_vehiculo);
 
         $ride->update([
@@ -75,6 +74,7 @@ class RideController extends Controller
         return redirect()->route('rides.index')
             ->with('success', 'Ride actualizado correctamente');
     }
+
 
     public function destroy($id_ride)
     {

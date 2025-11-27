@@ -38,12 +38,13 @@ return new class extends Migration
             $table->foreign('id_chofer')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
 
             $table->foreign('id_vehiculo')
-                ->references('id_vehiculo')
-                ->on('vehiculos')
-                ->onDelete('cascade');
+            ->references('id_vehiculo')
+            ->on('vehiculos')
+            ->onDelete('restrict');
+
         });
     }
 

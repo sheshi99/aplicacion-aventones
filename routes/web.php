@@ -80,3 +80,16 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
     Route::delete('/rides/{ride}', [RideController::class, 'destroy'])
         ->name('rides.destroy');   
 });
+
+
+
+/*Route::get('/hora', function () {
+    return now()->format('Y-m-d H:i:s');
+});
+
+Route::get('/phptime', function () {
+    return date('Y-m-d H:i:s');
+});*/
+
+
+

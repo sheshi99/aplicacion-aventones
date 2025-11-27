@@ -123,11 +123,26 @@ class VehiculoController extends Controller
     }
 
     // ELIMINAR VEHICULO
+
     public function destroy(Vehiculo $vehiculo)
     {
+        // Verificar si tiene rides asociados
+        if ($vehiculo->rides()->count() > 0) {
+            return redirect()->route('vehiculos.index')
+                            ->with('error', 'No se puede eliminar este vehículo porque tiene rides asociados.');
+        }
+
+        // Borrar la foto si existe
+        if ($vehiculo->fotografia && \Storage::disk('public')->exists($vehiculo->fotografia)) {
+            \Storage::disk('public')->delete($vehiculo->fotografia);
+        }
+
+        // Borrar el vehículo
         $vehiculo->delete();
 
         return redirect()->route('vehiculos.index')->with('success', 'Vehículo eliminado');
     }
+
+
 }
 

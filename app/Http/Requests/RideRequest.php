@@ -19,7 +19,7 @@ class RideRequest extends FormRequest
             'llegada'     => 'required',
             'dia'         => 'required|date',
             'hora'        => 'required',
-            'costo'       => 'required|numeric|min:0',
+            'costo' => 'required|numeric|min:1500',
             'espacios'    => 'required|integer|min:1',
         ];
     }
@@ -32,22 +32,26 @@ class RideRequest extends FormRequest
             $idRide = $this->route('ride')->id_ride ?? null;
 
             // Validaciones extra
-            if ($msg = $this->validarCapacidad($vehiculo, $this->espacios)) {
-                $validator->errors()->add('espacios', $msg);
+            if ($mensaje = $this->validarCapacidad($vehiculo, $this->espacios)) {
+                $validator->errors()->add('espacios', $mensaje);
             }
 
-            if ($msg = $this->validarChoqueHorario(
+            if ($mensaje = $this->validarChoqueHorario(
                 $this->id_vehiculo, $this->dia, $this->hora, $idRide
             )) {
-                $validator->errors()->add('hora', $msg);
+                $validator->errors()->add('hora', $mensaje);
             }
 
-            if ($msg = $this->validarDiaHoraActual($this->dia, $this->hora)) {
-                $validator->errors()->add('hora', $msg);
+            if ($errorDia = $this->validarDia($this->dia)) {
+                $validator->errors()->add('dia', $errorDia);
             }
 
-            if ($msg = $this->validarSalidaLlegada($this->salida, $this->llegada)) {
-                $validator->errors()->add('llegada', $msg);
+            if ($errorHora = $this->validarHora($this->dia, $this->hora)) {
+                $validator->errors()->add('hora', $errorHora);
+            }
+
+            if ($mensaje = $this->validarSalidaLlegada($this->salida, $this->llegada)) {
+                $validator->errors()->add('llegada', $mensaje);
             }
         });
     }
@@ -81,28 +85,40 @@ class RideRequest extends FormRequest
     }
 
 
-    private function validarDiaHoraActual($dia, $hora)
+    private function validarDia($dia)
+    {
+        $hoy = date('Y-m-d');
+        $diaNormalizado = date('Y-m-d', strtotime($dia));
+
+        return $diaNormalizado < $hoy
+            ? "El día del ride no puede ser anterior a hoy."
+            : null;
+    }
+    
+    private function validarHora($dia, $hora)
     {
         $hoy = date('Y-m-d');
         $ahora = date('H:i');
 
-        $diaNorm = date('Y-m-d', strtotime($dia));
+        $diaNormalizado = date('Y-m-d', strtotime($dia));
 
-        if ($diaNorm < $hoy) {
-            return "El día del ride no puede ser anterior a hoy.";
-        }
-
-        if ($diaNorm == $hoy && $hora < $ahora) {
+        if ($diaNormalizado == $hoy && $hora < $ahora) {
             return "La hora no puede ser menor a la hora actual.";
         }
 
         return null;
     }
 
-    private function validarSalidaLlegada($salida, $llegada)
+    private function validarSalidaLlegada($lugarSalida, $lugarLlegada)
     {
-        return $salida === $llegada
+        // Quitar espacios al inicio y final y pasar a minúsculas
+        $salidaNormalizada = trim(mb_strtolower($lugarSalida));
+        $llegadaNormalizada = trim(mb_strtolower($lugarLlegada));
+
+        // Comparar
+        return $salidaNormalizada === $llegadaNormalizada
             ? "El lugar de salida no puede ser igual al de llegada."
             : null;
     }
+
 }

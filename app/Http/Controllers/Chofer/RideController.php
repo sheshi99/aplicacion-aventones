@@ -45,9 +45,8 @@ class RideController extends Controller
             ->with('success', 'Ride creado correctamente');
     }
 
-    public function edit($id_ride)
+    public function edit(Ride $ride)
     {
-        $ride = Ride::findOrFail($id_ride);
         $vehiculos = Vehiculo::all();
         return view('rides.edit', compact('ride', 'vehiculos'));
     }
@@ -76,11 +75,10 @@ class RideController extends Controller
     }
 
 
-    public function destroy($id_ride)
+    public function destroy(Ride $ride)
     {
-        Ride::findOrFail($id_ride)->delete();
-
-        return redirect()->route('rides.index')
-            ->with('success', 'Ride eliminado');
+        $ride->delete();
+        return redirect()->route('rides.index')->with('success', 'Ride eliminado');
     }
+
 }

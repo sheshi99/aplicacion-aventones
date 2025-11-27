@@ -26,8 +26,7 @@ return new class extends Migration
         // Clave foránea
         $table->foreign('id_chofer')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
         $table->timestamps();
         

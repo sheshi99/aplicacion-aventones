@@ -17,6 +17,7 @@ class RolMiddleware
      * @param  string  $rol
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    
     public function handle(Request $request, Closure $next, string $rol): Response
     {
         // Verifica si hay sesión

@@ -20,6 +20,11 @@
             </div>
         @endif
 
+        <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary mb-3">
+            Agregar Administrador
+        </a>
+
+
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr>

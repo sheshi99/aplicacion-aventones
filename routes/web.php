@@ -36,6 +36,14 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
     // Dashboard del administrador
     Route::get('/', [AdminDashboard::class, 'index'])
         ->name('admin.panel');
+    
+    // FORMULARIO DE CREAR ADMIN
+    Route::get('/usuarios/create', [AdminDashboard::class, 'createAdmin'])
+    ->name('admin.usuarios.create');
+
+    // GUARDAR ADMIN NUEVO  
+    Route::post('/usuarios', [AdminDashboard::class, 'storeAdmin'])
+    ->name('admin.usuarios.store');
 
     // Cambiar estado de usuarios (activar / desactivar)
     Route::patch('/usuarios/{id}/estado', [AdminDashboard::class, 'cambiarEstado'])

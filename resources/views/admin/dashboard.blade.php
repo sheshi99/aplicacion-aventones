@@ -6,7 +6,19 @@
 
 <div class="row g-3">
     <div class="col-md-12">
-        <h3 class="mb-4">Lista de Usuarios Registrados</h3>
+        <h3 class="mb-4">Usuarios Registrados</h3>
+
+        @if(session('success'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-4 font-medium text-sm text-red-600">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <table class="table table-bordered">
             <thead class="table-dark">
@@ -33,23 +45,17 @@
 
                     {{-- Botones de acción --}}
                     <td>
-                        @if($user->estado === 'activo')
-                        <!-- Botón de desactivar -->
-                        <form action="{{ route('admin.usuarios.estado', $user->id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button class="btn btn-danger btn-sm">
-                                Desactivar
-                            </button>
-                        </form>
 
-                        @elseif($user->estado === 'pendiente')
-                        <button class="btn btn-secondary btn-sm" disabled>Pendiente</button>
+                            <form action="{{ route('admin.usuarios.estado', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
 
-                        @else
-                        <button class="btn btn-secondary btn-sm" disabled>Inactivo</button>
-
-                        @endif
+                                <button class="btn btn-warning btn-sm">
+                                    @if($user->estado === 'activo' || $user->estado === 'pendiente')
+                                        Desactivar
+                                    @endif
+                                </button>
+                            </form>
                     </td>
 
                 </tr>

@@ -17,9 +17,10 @@ class RideController extends Controller
 
     public function create()
     {
-        $vehiculos = Vehiculo::all();
+        $vehiculos = Vehiculo::where('id_chofer', auth()->id())->get();
         return view('rides.create', compact('vehiculos'));
     }
+
 
     public function store(RideRequest $request)
     {
@@ -47,9 +48,10 @@ class RideController extends Controller
 
     public function edit(Ride $ride)
     {
-        $vehiculos = Vehiculo::all();
+        $vehiculos = Vehiculo::where('id_chofer', auth()->id())->get();
         return view('rides.edit', compact('ride', 'vehiculos'));
     }
+
 
     public function update(RideRequest $request, Ride $ride)
     {

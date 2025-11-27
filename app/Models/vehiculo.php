@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Ride;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,4 +28,9 @@ class vehiculo extends Model
         return $this->belongsTo(Usuario::class, 'id_chofer', 'id_usuario');
     }
     
+
+    public function rides()
+    {
+        return $this->hasMany(Ride::class, 'id_vehiculo', 'id_vehiculo');
+    }
 }

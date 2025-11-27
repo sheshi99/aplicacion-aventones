@@ -98,6 +98,7 @@ return [
         'fotografia' => 'fotografía',
         'rol' => 'rol',
         'anno' => 'año',
+        'id_vehiculo'=> 'vehículo',
         
     ],
 ];

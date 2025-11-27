@@ -15,19 +15,18 @@ return new class extends Migration
         $table->bigIncrements('id_vehiculo');
         $table->unsignedBigInteger('id_chofer');
 
-        $table->string('numero_placa', 20);
+        $table->string('numero_placa', 20)->unique();
         $table->string('color', 50);
         $table->string('marca', 50);
         $table->string('modelo', 50);
         $table->integer('anno');
-        $table->integer('capacidad_asientos');
+        $table->integer('capacidad_asientos')->unsigned(); //Número entero positivo
         $table->string('fotografia', 255)->nullable();
 
         // Clave foránea
         $table->foreign('id_chofer')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
         $table->timestamps();
         

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
 use App\Http\Controllers\Chofer\VehiculoController;
+use App\Http\Controllers\Chofer\RideController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -70,4 +71,37 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
     Route::delete('/vehiculos/{vehiculo}', [VehiculoController::class, 'destroy'])
         ->name('vehiculos.destroy');
 
+    /* ============================
+       CRUD RIDES
+    ============================ */
+    Route::get('/rides', [RideController::class, 'index'])
+        ->name('rides.index');
+
+    Route::get('/rides/create', [RideController::class, 'create'])
+        ->name('rides.create');
+
+    Route::post('/rides', [RideController::class, 'store'])
+        ->name('rides.store');
+
+    Route::get('/rides/{ride}/edit', [RideController::class, 'edit'])
+        ->name('rides.edit');
+
+    Route::put('/rides/{ride}', [RideController::class, 'update'])
+        ->name('rides.update');
+
+    Route::delete('/rides/{ride}', [RideController::class, 'destroy'])
+        ->name('rides.destroy');   
 });
+
+
+
+/*Route::get('/hora', function () {
+    return now()->format('Y-m-d H:i:s');
+});
+
+Route::get('/phptime', function () {
+    return date('Y-m-d H:i:s');
+});*/
+
+
+

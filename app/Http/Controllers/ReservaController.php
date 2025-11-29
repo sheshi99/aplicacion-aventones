@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
-    // Pasajero crea reserva
+
+    // Acciones Pasajero 
+ 
     public function store(Request $request, $id_ride)
     {
         $ride = Ride::findOrFail($id_ride);
@@ -23,6 +25,17 @@ class ReservaController extends Controller
 
         return redirect()->back()->with('success','Reserva enviada');
     }
+
+    public function reservasPasajero()
+    {
+        $reservas = Reserva::where('id_pasajero', Auth::id())
+            ->with(['ride', 'ride.chofer'])
+            ->orderBy('id_reserva', 'desc')
+            ->get();
+
+        return view('reservas.pasajero', compact('reservas'));
+    }
+
 
     // Pasajero cancela
     public function cancelar($id)
@@ -52,6 +65,8 @@ class ReservaController extends Controller
     }
 
 
+    // Acciones chofer
+
     public function reservasChofer()
     {
         $reservas = Reserva::whereHas('ride', function($q){
@@ -65,9 +80,6 @@ class ReservaController extends Controller
     }
 
 
-
-
-    // Chofer acepta
     public function aceptar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -96,7 +108,7 @@ class ReservaController extends Controller
     }
 
 
-    // Chofer rechaza
+
     public function rechazar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -117,6 +129,7 @@ class ReservaController extends Controller
 
         return back()->with('success', 'Reserva rechazada.');
     }
+
 
 
     // Ver reservas activas (pasajero o chofer)

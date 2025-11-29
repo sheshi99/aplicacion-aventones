@@ -168,10 +168,20 @@
             @enderror
         </div>
 
-        {{-- BOTÓN REGISTRAR --}}
-        <button type="submit" class="btn btn-primary w-100 mt-3">
-            Registrar
-        </button>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <a class="btn btn-link p-0 text-decoration-none small"
+            href="{{ route('login') }}">
+                ¿Ya estás registrado?
+            </a>
+
+            <button type="submit" class="btn btn-primary px-4 py-10 w-50 fw-semibold">
+                Registrar
+            </button>
+
+        </div>
+
+
 
     </form>
 

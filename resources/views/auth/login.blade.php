@@ -66,17 +66,25 @@
             </label>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+    <div class="d-flex align-items-center gap-3">
             @if (Route::has('password.request'))
-                <a class="text-decoration-none" href="{{ route('password.request') }}">
+                <a class="btn btn-link p-0 text-decoration-none small" href="{{ route('password.request') }}">
                     ¿Olvidó su contraseña?
                 </a>
             @endif
 
-            <button type="submit" class="btn btn-primary">
-                Ingresar
-            </button>
+            <a class="btn btn-link p-0 text-decoration-none small" href="{{ route('register') }}">
+                ¿No tienes una cuenta?
+            </a>
         </div>
+
+        <button type="submit" class="btn btn-primary">
+            Ingresar
+        </button>
+
+    </div>
     </form>
 
 </x-guest-layout>

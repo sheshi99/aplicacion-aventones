@@ -71,26 +71,22 @@ class ReservaController extends Controller
         $reserva = Reserva::findOrFail($id);
         $ride = $reserva->ride;
 
-        // solo chofer dueño del ride puede aceptar
         if ($ride->id_chofer != auth()->id()) {
             abort(403);
         }
 
-        // validar estado
-        if ($reserva->estado != 'pendiente') {
-            return back()->with('error', 'Esta reserva no está pendiente.');
-        }
-
-        // validar cupos
-        if ($ride->espacios <= 0) {
+        // Validar cupos solo si la reserva no estaba aceptada
+        if ($reserva->estado !== 'aceptada' && $ride->espacios <= 0) {
             return back()->with('error', 'No hay cupos disponibles.');
         }
 
-        // Descontar cupo  
-        $ride->espacios -= 1;
-        $ride->save();
+        // Si estaba rechazada y ahora acepta, descontar cupo
+        if ($reserva->estado !== 'aceptada') {
+            $ride->espacios -= 1;
+            $ride->save();
+        }
 
-        // Cambiar estado
+        // Cambiar estado a aceptada
         $reserva->estado = 'aceptada';
         $reserva->save();
 
@@ -102,16 +98,24 @@ class ReservaController extends Controller
     public function rechazar($id)
     {
         $reserva = Reserva::findOrFail($id);
+        $ride = $reserva->ride;
 
-        if ($reserva->ride->id_chofer != Auth::id()) {
+        if ($ride->id_chofer != auth()->id()) {
             abort(403);
+        }
+
+        // Si estaba aceptada, devolver el cupo
+        if ($reserva->estado === 'aceptada') {
+            $ride->espacios += 1;
+            $ride->save();
         }
 
         $reserva->estado = 'rechazada';
         $reserva->save();
 
-        return redirect()->back()->with('success','Reserva rechazada');
+        return back()->with('success', 'Reserva rechazada.');
     }
+
 
     // Ver reservas activas (pasajero o chofer)
     public function activas()

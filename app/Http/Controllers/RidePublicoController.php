@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ride;
 use Illuminate\Http\Request;
 
-class RidePublicController extends Controller
+class RidePublicoController extends Controller
 {
     public function index(Request $request)
     {
@@ -31,6 +31,7 @@ class RidePublicController extends Controller
 
         $rides = $query->get();
 
-        return view('publico.rides', compact('rides'));
+        return view('rides.publicos', compact('rides')); 
+
     }
 }

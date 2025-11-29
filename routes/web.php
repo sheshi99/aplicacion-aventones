@@ -8,7 +8,7 @@ use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
 use App\Http\Controllers\Chofer\VehiculoController;
 use App\Http\Controllers\Chofer\RideController;
 use App\Http\Controllers\ReservaController;
-use App\Http\Controllers\RidePublicController;
+use App\Http\Controllers\RidePublicoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -144,7 +144,7 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
 // ===================================
 // PÁGINA PÚBLICA
 // ===================================
-Route::get('/', [RidePublicController::class, 'index'])
+Route::get('/', [RidePublicoController::class, 'index'])
     ->name('rides.publicos');
 
 

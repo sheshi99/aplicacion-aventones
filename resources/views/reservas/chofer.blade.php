@@ -49,8 +49,8 @@
                         {{-- Botones --}}
                         <td class="text-center">
 
-                            {{-- Si está pendiente → aceptar / rechazar --}}
                             @if ($reserva->estado == 'pendiente')
+                                {{-- Pendiente → Aceptar / Rechazar --}}
                                 <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button class="btn btn-success btn-sm">Aceptar</button>
@@ -62,28 +62,24 @@
                                 </form>
                             @endif
 
-                            {{-- Si está aceptada → solo rechazar --}}
                             @if ($reserva->estado == 'aceptada')
+                                {{-- Aceptada → solo Rechazar --}}
                                 <form action="{{ route('reservas.rechazar', $reserva->id_reserva) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button class="btn btn-danger btn-sm">Rechazar</button>
                                 </form>
                             @endif
 
-                            {{-- Si está rechazada → solo aceptar --}}
                             @if ($reserva->estado == 'rechazada')
+                                {{-- Rechazada → solo Aceptar --}}
                                 <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button class="btn btn-success btn-sm">Aceptar</button>
                                 </form>
                             @endif
 
-                            {{-- Si está cancelada → solo aceptar (si lo deseas) --}}
                             @if ($reserva->estado == 'cancelada')
-                                <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-success btn-sm">Aceptar</button>
-                                </form>
+                                <span class="text-muted">---</span>
                             @endif
 
                         </td>

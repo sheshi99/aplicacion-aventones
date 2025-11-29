@@ -89,6 +89,12 @@ class ReservaController extends Controller
             abort(403);
         }
 
+        // No permitir aceptar reservas canceladas
+        if ($reserva->estado === 'cancelada') {
+            return back()->with('error', 'No se puede aceptar una reserva cancelada 
+                                por el pasajero.');
+        }
+
         // Validar cupos solo si la reserva no estaba aceptada
         if ($reserva->estado !== 'aceptada' && $ride->espacios <= 0) {
             return back()->with('error', 'No hay cupos disponibles.');
@@ -116,6 +122,12 @@ class ReservaController extends Controller
 
         if ($ride->id_chofer != auth()->id()) {
             abort(403);
+        }
+
+         // No permitir rechazar reservas canceladas
+        if ($reserva->estado === 'cancelada') {
+            return back()->with('error', 'No se puede rechazar una reserva cancelada 
+                                por el pasajero.');
         }
 
         // Si estaba aceptada, devolver el cupo

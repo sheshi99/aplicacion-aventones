@@ -1,39 +1,58 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+    <form method="POST" action="{{ route('password.store') }}" class="w-100" style="max-width: 480px;">
         @csrf
 
-        <!-- Password Reset Token -->
+        <!-- Token oculto -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Correo')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <!-- Correo -->
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Correo') }}</label>
+            <input id="email" 
+                   type="email" 
+                   name="email" 
+                   class="form-control" 
+                   value="{{ old('email', $request->email) }}" 
+                   required autofocus autocomplete="username">
+
+            @error('email')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Contraseña')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!-- Contraseña -->
+        <div class="mb-3">
+            <label for="password" class="form-label">{{ __('Contraseña') }}</label>
+            <input id="password" 
+                   type="password" 
+                   name="password" 
+                   class="form-control" 
+                   required autocomplete="new-password">
+
+            @error('password')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
+        <!-- Confirmar contraseña -->
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">{{ __('Confirmar Contraseña') }}</label>
+            <input id="password_confirmation" 
+                   type="password" 
+                   name="password_confirmation" 
+                   class="form-control" 
+                   required autocomplete="new-password">
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            @error('password_confirmation')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+        <!-- Botón -->
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-primary">
                 {{ __('Restablecer Contraseña') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>

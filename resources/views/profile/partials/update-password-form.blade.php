@@ -1,47 +1,78 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Editar Contraseña') }}
-        </h2>
+    <header class="mb-4">
+        <h2 class="h5 text-dark">{{ __('Editar Contraseña') }}</h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-muted">
             {{ __('Asegúrese de que su cuenta utilice una contraseña larga y aleatoria para mantener su seguridad.') }}
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update') }}">
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Contraseña actual')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        {{-- Contraseña actual --}}
+        <div class="mb-3">
+            <label for="update_password_current_password" class="form-label">
+                {{ __('Contraseña actual') }}
+            </label>
+
+            <input type="password"
+                   id="update_password_current_password"
+                   name="current_password"
+                   class="form-control @error('current_password', 'updatePassword') is-invalid @enderror"
+                   autocomplete="current-password">
+
+            @error('current_password', 'updatePassword')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('Nueva Contraseña')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        {{-- Nueva contraseña --}}
+        <div class="mb-3">
+            <label for="update_password_password" class="form-label">
+                {{ __('Nueva Contraseña') }}
+            </label>
+
+            <input type="password"
+                   id="update_password_password"
+                   name="password"
+                   class="form-control @error('password', 'updatePassword') is-invalid @enderror"
+                   autocomplete="new-password">
+
+            @error('password', 'updatePassword')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirmar Contraseña')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        {{-- Confirmar contraseña --}}
+        <div class="mb-3">
+            <label for="update_password_password_confirmation" class="form-label">
+                {{ __('Confirmar Contraseña') }}
+            </label>
+
+            <input type="password"
+                   id="update_password_password_confirmation"
+                   name="password_confirmation"
+                   class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror"
+                   autocomplete="new-password">
+
+            @error('password_confirmation', 'updatePassword')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Guardar') }}</x-primary-button>
+        {{-- Botón --}}
+        <div class="d-flex align-items-center gap-3">
+            <button type="submit" class="btn btn-primary">
+                {{ __('Guardar') }}
+            </button>
 
+            {{-- Mensaje de Guardado --}}
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Guardado.') }}</p>
+                <div class="alert alert-success py-1 px-3 mb-0">
+                    {{ __('Guardado.') }}
+                </div>
             @endif
         </div>
     </form>

@@ -51,6 +51,19 @@ class ReservaController extends Controller
         return back()->with('success', 'Reserva cancelada.');
     }
 
+    public function reservasChofer()
+    {
+        // Obtener todas las reservas para los rides donde el usuario autenticado es el chofer.
+        $reservas = Reserva::whereHas('ride', function($query){
+            $query->where('id_chofer', Auth::id());
+        })
+        ->with(['ride', 'pasajero']) // Cargar el ride y el pasajero para usarlos en la vista
+        ->orderBy('created_at', 'desc') // Ordenar por la más reciente
+        ->get();
+
+        // Asume que tienes una vista llamada 'reservas.chofer'
+        return view('reservas.chofer', compact('reservas'));
+    }
 
     // Chofer acepta
     public function aceptar($id)

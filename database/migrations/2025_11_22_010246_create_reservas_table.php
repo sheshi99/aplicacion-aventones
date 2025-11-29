@@ -10,16 +10,23 @@ return new class extends Migration
      * Run the migrations.
      */
     
-    public function up(): void
+     public function up(): void
     {
         Schema::create('reservas', function (Blueprint $table) {
 
             $table->id('id_reserva');
 
-            $table->foreignId('id_ride')->constrained('rides');
-            $table->foreignId('id_pasajero')->constrained('users');
+            // Foreign key a rides.id_ride
+            $table->unsignedBigInteger('id_ride');
+            $table->foreign('id_ride')->references('id_ride')->on('rides');
 
+            // Foreign key a users.id
+            $table->unsignedBigInteger('id_pasajero');
+            $table->foreign('id_pasajero')->references('id')->on('users');
+
+            // Estado de la reserva
             $table->enum('estado', ['pendiente', 'aceptada', 'rechazada', 'cancelada'])->default('pendiente');
+
             $table->timestamps();
         });
     }

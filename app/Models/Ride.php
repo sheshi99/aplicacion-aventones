@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ride extends Model
 {
-     protected $table = 'rides';
+    protected $table = 'rides';
     protected $primaryKey = 'id_ride';
     public $timestamps = false; // No tiene created_at ni updated_at
 

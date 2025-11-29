@@ -1,12 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard Administrador')
+@section('title', 'Usuarios Registrados')
 
 @section('content')
 
 <div class="row g-3">
     <div class="col-md-12">
-        <h3 class="mb-4">Usuarios Registrados</h3>
 
         @if(session('success'))
         <div class="mb-4 font-medium text-sm text-green-600">

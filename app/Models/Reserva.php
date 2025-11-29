@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;
+use App\Models\Ride;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,15 +19,14 @@ class Reserva extends Model
         'estado',
     ];
 
-    // Una reserva pertenece a un ride
-    public function ride()
+     public function ride()
     {
         return $this->belongsTo(Ride::class, 'id_ride', 'id_ride');
     }
 
-    // Una reserva pertenece a un pasajero
     public function pasajero()
     {
-        return $this->belongsTo(Usuario::class, 'id_pasajero', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_pasajero', 'id');
     }
+
 }

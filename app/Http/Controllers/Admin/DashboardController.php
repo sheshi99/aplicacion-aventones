@@ -119,7 +119,7 @@ class DashboardController extends Controller
 
     public function cambiarEstado($id)
     {
-        $superAdminId = 1; // Usuario superadmin por código
+        $superAdminId = 1; 
         $auth = Auth::user();
         $user = User::findOrFail($id);
 
@@ -133,28 +133,39 @@ class DashboardController extends Controller
             return back()->with('error', 'No puedes desactivarte a ti mismo.');
         }
 
-        // 3. Superadmin puede desactivar a cualquier usuario
+        // 3. Superadmin puede activar/desactivar a cualquier usuario
         if ($auth->id == $superAdminId) {
-            $user->estado = 'inactivo';
+
+            if ($user->estado === 'inactivo') {
+                $user->estado = 'activo';
+            } else {
+                $user->estado = 'inactivo';
+            }
+
             $user->save();
             return back()->with('success', 'Estado del usuario actualizado correctamente.');
         }
 
-        // 4. Admin normal no puede desactivar a otros admins
+        // 4. Admin normal no puede modificar a otros admins
         if ($auth->rol === 'admin') {
 
             if ($user->rol === 'admin') {
-                return back()->with('error', 'No puedes desactivar a otro administrador.');
+                return back()->with('error', 'No puedes desactivar o activar a otro administrador.');
             }
 
-            // Puede desactivar usuarios normales
-            $user->estado = 'inactivo';
-            $user->save();
+            // Puede activar o desactivar usuarios normales
+            if ($user->estado === 'inactivo') {
+                $user->estado = 'activo';
+            } else {
+                $user->estado = 'inactivo';
+            }
 
+            $user->save();
             return back()->with('success', 'Estado del usuario actualizado correctamente.');
         }
 
         // 5. Usuarios normales NO pueden hacer nada
         return back()->with('error', 'No tienes permisos para cambiar estados.');
     }
+
 }

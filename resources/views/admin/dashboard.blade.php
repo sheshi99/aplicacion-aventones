@@ -49,18 +49,22 @@
 
                     {{-- Botones de acción --}}
                     <td>
+                        <form action="{{ route('admin.usuarios.estado', $user->id) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
 
-                            <form action="{{ route('admin.usuarios.estado', $user->id) }}" method="POST">
-                                @csrf
-                                @method('PATCH')
-
-                                <button class="btn btn-warning btn-sm">
-                                    @if($user->estado === 'activo' || $user->estado === 'pendiente')
-                                        Desactivar
-                                    @endif
+                            @if($user->estado === 'inactivo')
+                                <button class="btn btn-success btn-sm">
+                                    Activar
                                 </button>
-                            </form>
+                            @else
+                                <button class="btn btn-warning btn-sm">
+                                    Desactivar
+                                </button>
+                            @endif
+                        </form>
                     </td>
+
 
                 </tr>
                 @endforeach

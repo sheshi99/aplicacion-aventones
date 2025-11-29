@@ -27,9 +27,8 @@
                 Mis Rides
             </a>
 
-
-            <a href="#"
-               class="nav-link text-dark mb-2">
+            <a href="{{ route('reservas.mias') }}"
+               class="nav-link text-white mb-2 {{ request()->routeIs('reservas.mias') ? 'fw-bold text-success rounded px-2' : '' }}">
                 Mis Reservas
             </a>
 

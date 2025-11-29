@@ -40,7 +40,7 @@ class ReservaController extends Controller
         // Si la reserva estaba aceptada → devolver cupo
         if ($reserva->estado == 'aceptada') {
             $ride = $reserva->ride;
-            $ride->cupos_disponibles += 1;
+            $ride->espacios += 1;
             $ride->save();
         }
 
@@ -65,6 +65,7 @@ class ReservaController extends Controller
         return view('reservas.chofer', compact('reservas'));
     }
 
+
     // Chofer acepta
     public function aceptar($id)
     {
@@ -82,12 +83,12 @@ class ReservaController extends Controller
         }
 
         // validar cupos
-        if ($ride->cupos_disponibles <= 0) {
+        if ($ride->espacios <= 0) {
             return back()->with('error', 'No hay cupos disponibles.');
         }
 
         // Descontar cupo  
-        $ride->cupos_disponibles -= 1;
+        $ride->espacios -= 1;
         $ride->save();
 
         // Cambiar estado

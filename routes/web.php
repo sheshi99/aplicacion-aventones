@@ -7,6 +7,7 @@ use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
 use App\Http\Controllers\Chofer\VehiculoController;
 use App\Http\Controllers\Chofer\RideController;
+use App\Http\Controllers\ReservaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,18 +31,18 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
 require __DIR__.'/auth.php';
 
 
-// RUTAS EXCLUSIVAS PARA ADMIN
+// Rutas exclusivas para admin
 Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
 
-    // Dashboard del administrador
+    // Dashboard del admin
     Route::get('/', [AdminDashboard::class, 'index'])
         ->name('admin.panel');
     
-    // FORMULARIO DE CREAR ADMIN
+    // Formulario crear admin
     Route::get('/usuarios/create', [AdminDashboard::class, 'createAdmin'])
     ->name('admin.usuarios.create');
 
-    // GUARDAR ADMIN NUEVO  
+    // Guardar admin nuevo  
     Route::post('/usuarios', [AdminDashboard::class, 'storeAdmin'])
     ->name('admin.usuarios.store');
 
@@ -52,7 +53,25 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
 });
 
 
-Route::middleware(['auth','rol:pasajero'])->get('/pasajero', [PasajeroDashboard::class, 'index'])->name('pasajero.panel');
+Route::middleware(['auth','rol:pasajero'])->group(function () {
+
+    Route::get('/pasajero', [PasajeroDashboard::class, 'index'])
+        ->name('pasajero.panel');
+
+    // Crear reserva
+    Route::post('/reservas/{ride}', [ReservaController::class, 'store'])
+        ->name('reservas.store');
+
+    // Cancelar reserva
+    Route::delete('/reservas/{reserva}', [ReservaController::class, 'cancel'])
+        ->name('reservas.cancel');
+
+    // Ver reservas del pasajero
+    Route::get('/mis-reservas', [ReservaController::class, 'misReservas'])
+        ->name('reservas.mias');
+});
+
+
 
 // Rutas exclusivas para CHOFER
 Route::middleware(['auth', 'rol:chofer'])->group(function () {
@@ -60,7 +79,10 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
     Route::get('/chofer', [ChoferDashboard::class, 'index'])
         ->name('chofer.panel');
 
-    // CRUD Vehículos
+      /* ============================
+       CRUD VEHICULOS
+    ============================ */
+
     Route::get('/vehiculos', [VehiculoController::class, 'index'])
         ->name('vehiculos.index');
 
@@ -99,6 +121,22 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
 
     Route::delete('/rides/{ride}', [RideController::class, 'destroy'])
         ->name('rides.destroy');   
+
+      /* ===========================
+           RESERVAS 
+       =========================== */
+
+    // Ver reservas recibidas para sus rides
+    Route::get('/reservas-chofer', [ReservaController::class, 'reservasChofer'])
+        ->name('reservas.chofer');
+
+    // Aceptar
+    Route::post('/reservas/{reserva}/aceptar', [ReservaController::class, 'aceptar'])
+        ->name('reservas.aceptar');
+
+    // Rechazar
+    Route::post('/reservas/{reserva}/rechazar', [ReservaController::class, 'rechazar'])
+        ->name('reservas.rechazar');
 });
 
 

@@ -54,9 +54,10 @@
                 </div>
             </div>
 
-            <button class="btn btn-success">Guardar Vehículo</button>
-            <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary">Cancelar</a>
-
+            <div class="d-flex justify-content-end gap-2 mt-30">
+                <button type="submit" class="btn btn-success">Guardar Vehículo</button>
+                <a href="{{ route('vehiculos.index') }}" class="btn btn-danger">Cancelar</a>
+            </div>
         </div>
     </form>
 

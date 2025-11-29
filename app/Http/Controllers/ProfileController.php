@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -18,7 +21,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request)
     {
         $user = $request->user();
 
@@ -35,33 +38,24 @@ class ProfileController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        // Manejar fotografía (respetando tu fragmento original)
+        // Manejar fotografía
         if ($request->hasFile('fotografia')) {
             $archivo = $request->file('fotografia');
-            $baseRuta = 'usuarios/';
-            $rolRuta = $baseRuta . '/';
 
-            if (!is_dir(public_path($rolRuta))) {
-                mkdir(public_path($rolRuta), 0777, true);
+            $nombreArchivo = Str::slug($user->id . '_' . $user->name) . '.' . $archivo->getClientOriginalExtension();
+            $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
+
+            // Borrar foto anterior si existe
+            if ($user->fotografia && Storage::disk('public')->exists($user->fotografia)) {
+                Storage::disk('public')->delete($user->fotografia);
             }
 
-            $extension = $archivo->getClientOriginalExtension();
-            $nombreArchivo = "{$user->id}_" . preg_replace('/\s+/', '_', $user->name) . ".{$extension}";
-            $destino = $rolRuta . $nombreArchivo;
-
-            // Borrar foto existente
-            if ($user->fotografia && file_exists(public_path($user->fotografia))) {
-                unlink(public_path($user->fotografia));
-            }
-
-            // Mover archivo
-            $archivo->move(public_path($rolRuta), $nombreArchivo);
-            $user->fotografia = $destino;
+            $user->fotografia = $ruta;
         }
 
         $user->save();
 
-        return Redirect::route('profile.edit')
+        return redirect()->route('profile.edit')
             ->with('success', 'Perfil actualizado correctamente.');
     }
 }

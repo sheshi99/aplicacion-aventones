@@ -21,7 +21,7 @@ class ReservaController extends Controller
             'estado' => 'pendiente'
         ]);
 
-        return redirect()->back()->with('ok','Reserva enviada');
+        return redirect()->back()->with('success','Reserva enviada');
     }
 
     // Pasajero cancela
@@ -53,7 +53,7 @@ class ReservaController extends Controller
 
     public function reservasChofer()
     {
-        // Obtener todas las reservas para los rides donde el usuario autenticado es el chofer.
+      
         $reservas = Reserva::whereHas('ride', function($query){
             $query->where('id_chofer', Auth::id());
         })
@@ -61,7 +61,6 @@ class ReservaController extends Controller
         ->orderBy('created_at', 'desc') // Ordenar por la más reciente
         ->get();
 
-        // Asume que tienes una vista llamada 'reservas.chofer'
         return view('reservas.chofer', compact('reservas'));
     }
 
@@ -111,7 +110,7 @@ class ReservaController extends Controller
         $reserva->estado = 'rechazada';
         $reserva->save();
 
-        return redirect()->back()->with('ok','Reserva rechazada');
+        return redirect()->back()->with('success','Reserva rechazada');
     }
 
     // Ver reservas activas (pasajero o chofer)

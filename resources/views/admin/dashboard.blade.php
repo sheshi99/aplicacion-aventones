@@ -25,7 +25,7 @@
 
 
         <table class="table table-bordered">
-            <thead class="table-dark">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
@@ -58,10 +58,11 @@
                                     Activar
                                 </button>
                             @else
-                                <button class="btn btn-warning btn-sm">
+                                <button class="btn btn-danger btn-sm">
                                     Desactivar
                                 </button>
                             @endif
+
                         </form>
                     </td>
 

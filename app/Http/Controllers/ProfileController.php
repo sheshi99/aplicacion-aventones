@@ -42,7 +42,11 @@ class ProfileController extends Controller
         if ($request->hasFile('fotografia')) {
             $archivo = $request->file('fotografia');
 
-            $nombreArchivo = Str::slug($user->id . '_' . $user->name) . '.' . $archivo->getClientOriginalExtension();
+            $nombreLimpio = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->id . '_' . $user->name);
+
+            $nombreArchivo = $nombreLimpio . '.' . $archivo->getClientOriginalExtension();
+            $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
+
             $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
 
             // Borrar foto anterior si existe

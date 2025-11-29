@@ -51,18 +51,20 @@ class ReservaController extends Controller
         return back()->with('success', 'Reserva cancelada.');
     }
 
+
     public function reservasChofer()
     {
-      
-        $reservas = Reserva::whereHas('ride', function($query){
-            $query->where('id_chofer', Auth::id());
+        $reservas = Reserva::whereHas('ride', function($q){
+            $q->where('id_chofer', Auth::id());
         })
-        ->with(['ride', 'pasajero']) // Cargar el ride y el pasajero para usarlos en la vista
-        ->orderBy('created_at', 'desc') // Ordenar por la más reciente
+        ->with(['ride', 'pasajero'])
+        ->orderBy('id_reserva', 'desc')
         ->get();
 
         return view('reservas.chofer', compact('reservas'));
     }
+
+
 
 
     // Chofer acepta

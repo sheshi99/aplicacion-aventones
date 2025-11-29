@@ -15,7 +15,6 @@ class Reserva extends Model
     protected $fillable = [
         'id_ride',
         'id_pasajero',
-        'fecha_reserva',
         'estado',
     ];
 

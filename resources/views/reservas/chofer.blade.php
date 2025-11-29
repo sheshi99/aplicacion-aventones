@@ -12,9 +12,12 @@
             <table class="table table-hover mb-0 align-middle">
                 <thead class="table-light">
                     <tr>
+                        <th>Salida</th>
+                        <th>Llegada</th>
+                        <th>Fecha y Hora</th>
+                        <th>Vehículo</th>
+                        <th>Costo</th>
                         <th>Pasajero</th>
-                        <th>Ride</th>
-                        <th>Fecha</th>
                         <th>Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -23,40 +26,66 @@
                 <tbody>
                 @foreach ($reservas as $reserva)
                     <tr>
-                        <td>{{ $reserva->pasajero->name }}</td>
-                        <td>{{ $reserva->ride->nombre }}</td>
-                        <td>{{ $reserva->fecha_reserva }}</td>
 
+                        {{-- Datos del Ride --}}
+                        <td>{{ $reserva->ride->salida }}</td>
+                        <td>{{ $reserva->ride->llegada }}</td>
+                        <td>{{ $reserva->ride->dia }} {{ $reserva->ride->hora }}</td>
+
+                        {{-- Vehículo --}}
                         <td>
-                            @if($reserva->estado == 'pendiente')
-                                <span class="badge bg-warning text-dark">Pendiente</span>
-                            @elseif($reserva->estado == 'aceptada')
-                                <span class="badge bg-success">Aceptada</span>
-                            @else
-                                <span class="badge bg-danger">Rechazada</span>
-                            @endif
+                            {{ $reserva->ride->vehiculo_placa }}<br>
+                            {{ $reserva->ride->vehiculo_marca }}
+                            {{ $reserva->ride->vehiculo_modelo }}
+                            ({{ $reserva->ride->vehiculo_anio }})
                         </td>
 
+                        <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
+                       
+                        <td>{{ $reserva->pasajero->name }} {{ $reserva->pasajero->apellido }}</td>
+                       
+                        <td>{{ ucfirst($reserva->estado) }}</td>
+
+                        {{-- Botones --}}
                         <td class="text-center">
+
+                            {{-- Si está pendiente → aceptar / rechazar --}}
                             @if ($reserva->estado == 'pendiente')
-
-                                <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" 
-                                      method="POST" class="d-inline">
+                                <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">
-                                        <i class="bi bi-check-circle"></i> Aceptar
-                                    </button>
+                                    <button class="btn btn-success btn-sm">Aceptar</button>
                                 </form>
 
-                                <form action="{{ route('reservas.rechazar', $reserva->id_reserva) }}" 
-                                      method="POST" class="d-inline">
+                                <form action="{{ route('reservas.rechazar', $reserva->id_reserva) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-x-circle"></i> Rechazar
-                                    </button>
+                                    <button class="btn btn-danger btn-sm">Rechazar</button>
                                 </form>
-
                             @endif
+
+                            {{-- Si está aceptada → solo rechazar --}}
+                            @if ($reserva->estado == 'aceptada')
+                                <form action="{{ route('reservas.rechazar', $reserva->id_reserva) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-danger btn-sm">Rechazar</button>
+                                </form>
+                            @endif
+
+                            {{-- Si está rechazada → solo aceptar --}}
+                            @if ($reserva->estado == 'rechazada')
+                                <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-success btn-sm">Aceptar</button>
+                                </form>
+                            @endif
+
+                            {{-- Si está cancelada → solo aceptar (si lo deseas) --}}
+                            @if ($reserva->estado == 'cancelada')
+                                <form action="{{ route('reservas.aceptar', $reserva->id_reserva) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-success btn-sm">Aceptar</button>
+                                </form>
+                            @endif
+
                         </td>
 
                     </tr>

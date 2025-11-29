@@ -32,10 +32,11 @@
                 Mis Rides
             </a>
 
-            <a href="#"
-               class="nav-link text-white mb-2">
+            <a href="{{ route('reservas.chofer') }}"
+               class="nav-link text-white mb-2 {{ request()->routeIs('reservas.chofer') ? 'fw-bold text-success rounded px-2' : '' }}">
                 Mis Reservas
             </a>
+
 
             <a href="{{ route('profile.edit') }}"
                class="nav-link text-white mb-2 {{ request()->routeIs('profile.edit') ? 'fw-bold text-success rounded px-2' : '' }}">

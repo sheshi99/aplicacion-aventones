@@ -1,4 +1,5 @@
-@extends('pasajero.app')
+
+@extends('layouts.pasajero')
 
 @section('content')
 <h1>Rides disponibles</h1>

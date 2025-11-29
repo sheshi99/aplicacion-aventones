@@ -1,81 +1,121 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+    <header class="mb-4">
+        <h2 class="h5 text-dark">
             {{ __('Información de perfil') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-muted">
             {{ __("Actualice la información del perfil de su cuenta.") }}
         </p>
     </header>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
+        {{-- Mensajes --}}
         @if(session('success'))
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('error'))
-            <div class="mb-4 font-medium text-sm text-red-600">
+            <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
-        <!-- Nombre -->
-        <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+
+        {{-- Nombre --}}
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ __('Nombre') }}</label>
+            <input type="text" id="name" name="name" 
+                class="form-control @error('name') is-invalid @enderror"
+                value="{{ old('name', $user->name) }}" required autofocus>
+
+            @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Apellido -->
-        <div>
-            <x-input-label for="apellido" :value="__('Apellido')" />
-            <x-text-input id="apellido" name="apellido" type="text" class="mt-1 block w-full" :value="old('apellido', $user->apellido)" required autocomplete="apellido" />
-            <x-input-error class="mt-2" :messages="$errors->get('apellido')" />
+        {{-- Apellido --}}
+        <div class="mb-3">
+            <label for="apellido" class="form-label">{{ __('Apellido') }}</label>
+            <input type="text" id="apellido" name="apellido"
+                class="form-control @error('apellido') is-invalid @enderror"
+                value="{{ old('apellido', $user->apellido) }}" required>
+
+            @error('apellido')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Email -->
-        <div>
-            <x-input-label for="email" :value="__('Correo')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+        {{-- Correo --}}
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Correo') }}</label>
+            <input type="email" id="email" name="email"
+                class="form-control @error('email') is-invalid @enderror"
+                value="{{ old('email', $user->email) }}" required>
+
+            @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Cédula -->
-        <div>
-            <x-input-label for="cedula" :value="__('Cédula')" />
-            <x-text-input id="cedula" name="cedula" type="text" class="mt-1 block w-full" :value="old('cedula', $user->cedula)" required autocomplete="cedula" />
-            <x-input-error class="mt-2" :messages="$errors->get('cedula')" />
+        {{-- Cédula --}}
+        <div class="mb-3">
+            <label for="cedula" class="form-label">{{ __('Cédula') }}</label>
+            <input type="text" id="cedula" name="cedula"
+                class="form-control @error('cedula') is-invalid @enderror"
+                value="{{ old('cedula', $user->cedula) }}" required>
+
+            @error('cedula')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Teléfono -->
-        <div>
-            <x-input-label for="telefono" :value="__('Teléfono')" />
-            <x-text-input id="telefono" name="telefono" type="text" class="mt-1 block w-full" :value="old('telefono', $user->telefono)" required autocomplete="telefono" />
-            <x-input-error class="mt-2" :messages="$errors->get('telefono')" />
+        {{-- Teléfono --}}
+        <div class="mb-3">
+            <label for="telefono" class="form-label">{{ __('Teléfono') }}</label>
+            <input type="text" id="telefono" name="telefono"
+                class="form-control @error('telefono') is-invalid @enderror"
+                value="{{ old('telefono', $user->telefono) }}" required>
+
+            @error('telefono')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Fecha de nacimiento -->
-        <div>
-            <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
-            <x-text-input id="fecha_nacimiento" name="fecha_nacimiento" type="date" class="mt-1 block w-full" :value="old('fecha_nacimiento', $user->fecha_nacimiento)" required />
-            <x-input-error class="mt-2" :messages="$errors->get('fecha_nacimiento')" />
+        {{-- Fecha nacimiento --}}
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">{{ __('Fecha de nacimiento') }}</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"
+                class="form-control @error('fecha_nacimiento') is-invalid @enderror"
+                value="{{ old('fecha_nacimiento', $user->fecha_nacimiento) }}" required>
+
+            @error('fecha_nacimiento')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Fotografía -->
-        <div>
-            <x-input-label for="fotografia" :value="__('Fotografía (JPG, PNG, max 2MB)')" />
-            <input id="fotografia" name="fotografia" type="file" class="mt-1 block w-full" accept=".jpg,.jpeg,.png" />
-            <x-input-error class="mt-2" :messages="$errors->get('fotografia')" />
+        {{-- Fotografía --}}
+        <div class="mb-3">
+            <label for="fotografia" class="form-label">{{ __('Fotografía (JPG, PNG, max 2MB)') }}</label>
+            <input type="file" id="fotografia" name="fotografia"
+                accept=".jpg,.jpeg,.png"
+                class="form-control @error('fotografia') is-invalid @enderror">
+
+            @error('fotografia')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Botón Guardar -->
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Actualizar Perfil') }}</x-primary-button>
+        {{-- Botón --}}
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                {{ __('Actualizar Perfil') }}
+            </button>
         </div>
+
     </form>
 </section>

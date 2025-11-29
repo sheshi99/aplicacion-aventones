@@ -1,114 +1,188 @@
 <x-guest-layout>
 
     @php
-        // TRUE si un admin está usando la vista
         $modoAdmin = Auth::check() && Auth::user()->rol === 'admin';
     @endphp
 
+    {{-- MENSAJES DE VALIDACIÓN GLOBAL --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Por favor revise los campos marcados.</strong>
+        </div>
+    @endif
+
     <form method="POST"
-          action="{{ $modoAdmin ? route('admin.usuarios.store') : route('register') }}"
-          enctype="multipart/form-data">
+        action="{{ $modoAdmin ? route('admin.usuarios.store') : route('register') }}"
+        enctype="multipart/form-data"
+        class="mt-3">
 
         @csrf
 
-        <!-- Nombre -->
-        <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text"
-                          name="name" :value="old('name')" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        {{-- NOMBRE --}}
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text"
+                   class="form-control @error('name') is-invalid @enderror"
+                   id="name"
+                   name="name"
+                   value="{{ old('name') }}"
+                   required>
+
+            @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Apellido -->
-        <div class="mt-4">
-            <x-input-label for="apellido" :value="__('Apellido')" />
-            <x-text-input id="apellido" class="block mt-1 w-full" type="text"
-                          name="apellido" :value="old('apellido')" required />
-            <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
+        {{-- APELLIDO --}}
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text"
+                   class="form-control @error('apellido') is-invalid @enderror"
+                   id="apellido"
+                   name="apellido"
+                   value="{{ old('apellido') }}"
+                   required>
+
+            @error('apellido')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Correo -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Correo')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email"
-                          name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- CORREO --}}
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo</label>
+            <input type="email"
+                   class="form-control @error('email') is-invalid @enderror"
+                   id="email"
+                   name="email"
+                   value="{{ old('email') }}"
+                   required>
+
+            @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Contraseña -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Contraseña')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password"
-                          name="password" required />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        {{-- CONTRASEÑA --}}
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password"
+                   class="form-control @error('password') is-invalid @enderror"
+                   id="password"
+                   name="password"
+                   required>
+
+            @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Confirmar contraseña -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                          name="password_confirmation" required />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        {{-- CONFIRMAR CONTRASEÑA --}}
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>
+            <input type="password"
+                   class="form-control @error('password_confirmation') is-invalid @enderror"
+                   id="password_confirmation"
+                   name="password_confirmation"
+                   required>
+
+            @error('password_confirmation')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Cédula -->
-        <div class="mt-4">
-            <x-input-label for="cedula" :value="__('Cédula')" />
-            <x-text-input id="cedula" class="block mt-1 w-full" type="text"
-                          name="cedula" :value="old('cedula')" />
-            <x-input-error :messages="$errors->get('cedula')" class="mt-2" />
+        {{-- CÉDULA --}}
+        <div class="mb-3">
+            <label for="cedula" class="form-label">Cédula</label>
+            <input type="text"
+                   class="form-control @error('cedula') is-invalid @enderror"
+                   id="cedula"
+                   name="cedula"
+                   value="{{ old('cedula') }}">
+
+            @error('cedula')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Fecha -->
-        <div class="mt-4">
-            <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
-            <x-text-input id="fecha_nacimiento" class="block mt-1 w-full"
-                          type="date" name="fecha_nacimiento"
-                          :value="old('fecha_nacimiento')" />
-            <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
+        {{-- FECHA NACIMIENTO --}}
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+            <input type="date"
+                   class="form-control @error('fecha_nacimiento') is-invalid @enderror"
+                   id="fecha_nacimiento"
+                   name="fecha_nacimiento"
+                   value="{{ old('fecha_nacimiento') }}">
+
+            @error('fecha_nacimiento')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Teléfono -->
-        <div class="mt-4">
-            <x-input-label for="telefono" :value="__('Teléfono')" />
-            <x-text-input id="telefono" class="block mt-1 w-full" type="text"
-                          name="telefono" :value="old('telefono')" />
-            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+        {{-- TELÉFONO --}}
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text"
+                   class="form-control @error('telefono') is-invalid @enderror"
+                   id="telefono"
+                   name="telefono"
+                   value="{{ old('telefono') }}">
+
+            @error('telefono')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Fotografía -->
-        <div class="mt-4">
-            <x-input-label for="fotografia" :value="__('Fotografía')" />
-            <x-text-input id="fotografia" class="block mt-1 w-full" type="file"
-                          name="fotografia" />
-            <x-input-error :messages="$errors->get('fotografia')" class="mt-2" />
+        {{-- FOTOGRAFÍA --}}
+        <div class="mb-3">
+            <label for="fotografia" class="form-label">Fotografía</label>
+            <input type="file"
+                   class="form-control @error('fotografia') is-invalid @enderror"
+                   id="fotografia"
+                   name="fotografia">
+
+            @error('fotografia')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <!-- Rol -->
-        <div class="mt-4">
-            <x-input-label for="rol" :value="__('Rol')" />
+        {{-- ROL --}}
+        <div class="mb-3">
+            <label for="rol" class="form-label">Rol</label>
 
-            <select id="rol" name="rol" class="block mt-1 w-full">
+            <select class="form-select @error('rol') is-invalid @enderror"
+                    id="rol"
+                    name="rol">
 
                 @if($modoAdmin)
-                    <!-- El administrador puede crear administradores -->
                     <option value="admin">Administrador</option>
-                @else
-                    <!-- Registro público -->
-                    <option value="chofer">Chofer</option>
-                    <option value="pasajero">Pasajero</option>
                 @endif
+
+                <option value="chofer">Chofer</option>
+                <option value="pasajero">Pasajero</option>
 
             </select>
 
-            <x-input-error :messages="$errors->get('rol')" class="mt-2" />
+            @error('rol')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-4">
-                {{ __('Registrar') }}
-            </x-primary-button>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <a class="btn btn-link p-0 text-decoration-none small"
+            href="{{ route('login') }}">
+                ¿Ya estás registrado?
+            </a>
+
+            <button type="submit" class="btn btn-primary px-4 py-10 w-50 fw-semibold">
+                Registrar
+            </button>
+
         </div>
+
+
+
     </form>
 
 </x-guest-layout>

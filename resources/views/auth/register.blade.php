@@ -168,21 +168,32 @@
             @enderror
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-3">
+        {{-- BOTÓN Y ENLACES SEGÚN MODO ADMIN --}}
+        @if($modoAdmin)
+            {{-- Si ES admin creando usuarios → botón centrado --}}
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <a class="btn btn-link p-0 text-decoration-none small"
+                href="{{ route('admin.panel') }}">
+                    Volver
+                </a>
 
-            <a class="btn btn-link p-0 text-decoration-none small"
-            href="{{ route('login') }}">
-                ¿Ya estás registrado?
-            </a>
+                <button type="submit" class="btn btn-primary px-4 py-10 w-50 fw-semibold">
+                    Registrar
+                </button>
+            </div>
+        @else
+            {{-- Si NO es admin → enlace + botón normal --}}
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <a class="btn btn-link p-0 text-decoration-none small"
+                href="{{ route('login') }}">
+                    ¿Ya estás registrado?
+                </a>
 
-            <button type="submit" class="btn btn-primary px-4 py-10 w-50 fw-semibold">
-                Registrar
-            </button>
-
-        </div>
-
-
-
+                <button type="submit" class="btn btn-primary px-4 py-10 w-50 fw-semibold">
+                    Registrar
+                </button>
+            </div>
+        @endif
     </form>
 
 </x-guest-layout>

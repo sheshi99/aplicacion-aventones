@@ -2,12 +2,30 @@
 @section('content')
 <div class="container mt-4">
 
-    <x-mensaje />
-
     <h1 class="mb-4">Rides disponibles</h1>
 
-    <form method="GET" action="{{ route('rides.publicos') }}" class="mb-4">
+        {{-- MENSAJE DE CUENTA ACTIVADA --}}
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
+        {{-- MENSAJE DE TOKEN INVÁLIDO --}}
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- Session Status --}}
+        @if (session('status'))
+            <div class="alert alert-info">
+                {{ session('status') }}
+            </div>
+        @endif
+
+    <form method="GET" action="{{ route('rides.publicos') }}" class="mb-4">
         <div class="row g-3">
             <div class="col-md-4">
                 <input type="text" 
@@ -94,13 +112,14 @@
                                 </form>
                             @endif
                         @endauth
-
-                        @guest
-                            <button type="button" class="btn btn-success btn-sm"
-                                onclick="alert('Debes iniciar sesión para reservar un ride.')">
+                    @guest
+                        <form action="{{ route('reservas.intento', $ride->id_ride) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm">
                                 Reservar
                             </button>
-                        @endguest
+                        </form>
+                    @endguest
                     @endif
                 </td>
             </tr>

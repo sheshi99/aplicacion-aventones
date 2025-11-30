@@ -53,6 +53,10 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
 
 });
 
+Route::post('/reservas/intento/{ride}', 
+    [\App\Http\Controllers\RidePublicoController::class, 'intento']
+)->name('reservas.intento');
+
 
 Route::middleware(['auth','rol:pasajero'])->group(function () {
 
@@ -70,6 +74,8 @@ Route::middleware(['auth','rol:pasajero'])->group(function () {
     // Ver reservas del pasajero
     Route::get('/mis-reservas', [ReservaController::class, 'reservasPasajero'])
         ->name('reservas.mias');
+
+    
 });
 
 

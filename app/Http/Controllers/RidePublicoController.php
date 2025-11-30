@@ -38,5 +38,22 @@ class RidePublicoController extends Controller
         return view('rides.publicos', compact('rides'));
     }
 
+    public function intento($id)
+    {
+        // 1. Validar login
+        if (!auth()->check()) {
+            return back()->with('error', 'Debes iniciar sesión para reservar un ride.');
+        }
+
+        // 2. Validar rol pasajero
+        if (auth()->user()->rol !== 'pasajero') {
+            return back()->with('error', 'Solo los usuarios con rol PASAJERO pueden reservar rides.');
+        }
+
+        // 3. Si pasa validaciones, redirigimos al controlador correcto
+        return redirect()->route('reservas.store', $id);
+    }
+
+
 
 }

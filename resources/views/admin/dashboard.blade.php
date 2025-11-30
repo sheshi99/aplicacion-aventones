@@ -7,17 +7,26 @@
 <div class="row g-3">
     <div class="col-md-12">
 
-        @if(session('success'))
-        <div class="mb-4 font-medium text-sm text-green-600">
+    {{-- MENSAJE DE CUENTA ACTIVADA --}}
+    @if(session('success'))
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
-        @endif
+    @endif
 
-        @if(session('error'))
-            <div class="mb-4 font-medium text-sm text-red-600">
-                {{ session('error') }}
-            </div>
-        @endif
+    {{-- MENSAJE DE TOKEN INVÁLIDO --}}
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    {{-- Session Status --}}
+    @if (session('status'))
+        <div class="alert alert-info">
+            {{ session('status') }}
+        </div>
+    @endif
 
         <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary mb-3">
             Agregar Administrador
@@ -65,8 +74,6 @@
 
                         </form>
                     </td>
-
-
                 </tr>
                 @endforeach
             </tbody>

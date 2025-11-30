@@ -76,11 +76,15 @@ class RideController extends Controller
             ->with('success', 'Ride actualizado correctamente');
     }
 
-
     public function destroy(Ride $ride)
     {
+        if ($ride->reservas()->count() > 0) {
+            return back()->with('error', 'No se puede eliminar este ride porque tiene reservas.');
+        }
+
         $ride->delete();
         return redirect()->route('rides.index')->with('success', 'Ride eliminado');
     }
+
 
 }

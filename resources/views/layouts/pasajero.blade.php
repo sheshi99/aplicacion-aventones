@@ -24,7 +24,7 @@
 
             <a href="{{ route('rides.publicos') }}"
                 class="nav-link text-dark mb-2 {{ request()->routeIs('rides.publicos') ? 'fw-bold rounded px-2' : '' }}">
-                Mis Rides
+                Buscar Rides
             </a>
 
             <a href="{{ route('reservas.mias') }}"

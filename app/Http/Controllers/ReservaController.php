@@ -35,16 +35,19 @@ class ReservaController extends Controller
 
         foreach($reservas as $r) {
             $fechaHora = $r->ride->dia . ' ' . $r->ride->hora;
-            if ($fechaHora >= $now && in_array($r->estado, ['pendiente','aceptada','cancelada','rechazada'])) {
+
+            if ($fechaHora >= $now) {
                 $activas[] = $r;
             } else {
-                if ($r->estado === 'aceptada' && $fechaHora < $now) {
+                // Si estaba aceptada y ya pasó, marcar como realizado
+                if ($r->estado === 'aceptada') {
                     $r->estado = 'realizado';
                 }
                 $pasadas[] = $r;
             }
         }
-        return ['activas'=>$activas, 'pasadas'=>$pasadas];
+
+        return ['activas' => $activas, 'pasadas' => $pasadas];
     }
 
 

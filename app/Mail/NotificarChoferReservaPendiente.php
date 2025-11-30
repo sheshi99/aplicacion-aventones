@@ -11,43 +11,18 @@ use Illuminate\Queue\SerializesModels;
 
 class NotificarChoferReservaPendiente extends Mailable
 {
-    use Queueable, SerializesModels;
+     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public $reserva;
+
+    public function __construct(Reserva $reserva)
     {
-        //
+        $this->reserva = $reserva;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Notificar Chofer Reserva Pendiente',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject('Tienes reservas pendientes')
+            ->view('emails.notificar_chofer');
     }
 }

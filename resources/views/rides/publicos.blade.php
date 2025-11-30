@@ -1,5 +1,4 @@
-@extends('layouts.pasajero')
-
+@extends('layouts.ridesPublicos')
 @section('content')
 <div class="container mt-4">
 

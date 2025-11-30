@@ -105,7 +105,7 @@
                         <td>{{ $reserva->pasajero->name }} {{ $reserva->pasajero->apellido }}</td>
                         <td>{{ ucfirst($reserva->estado) }}</td>
                         <td class="text-center">
-                            {{-- Solo mostrar botones si es necesario, por ejemplo cancelar reservas pasadas no tiene sentido --}}
+                           
                             <span class="text-muted">---</span>
                         </td>
                     </tr>

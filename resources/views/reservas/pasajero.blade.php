@@ -13,12 +13,12 @@
             <table class="table table-hover mb-0 align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Chofer</th>
                         <th>Salida</th>
                         <th>Llegada</th>
                         <th>Fecha y Hora</th>
                         <th>Vehículo</th>
                         <th>Costo</th>
+                        <th>Chofer</th>
                         <th>Estado</th>
                         <th class="text-center">Acción</th>
                     </tr>
@@ -26,7 +26,6 @@
                 <tbody>
                 @foreach ($activas as $reserva)
                     <tr>
-                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
                         <td>{{ $reserva->ride->salida }}</td>
                         <td>{{ $reserva->ride->llegada }}</td>
                         <td>{{ $reserva->ride->dia }} {{ $reserva->ride->hora }}</td>
@@ -37,6 +36,7 @@
                             ({{ $reserva->ride->vehiculo_anio }})
                         </td>
                         <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
+                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
                         <td>{{ ucfirst($reserva->estado) }}</td>
                         <td class="text-center">
                             @if(in_array($reserva->estado, ['pendiente','aceptada']))
@@ -50,7 +50,7 @@
                                     </button>
                                 </form>
                             @else
-                                <span class="text-muted">N/A</span>
+                                <span class="text-muted">---</span>
                             @endif
                         </td>
                     </tr>
@@ -68,12 +68,12 @@
             <table class="table table-hover mb-0 align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Chofer</th>
                         <th>Salida</th>
                         <th>Llegada</th>
                         <th>Fecha y Hora</th>
                         <th>Vehículo</th>
                         <th>Costo</th>
+                        <th>Chofer</th>
                         <th>Estado</th>
                         <th class="text-center">Acción</th>
                     </tr>
@@ -81,7 +81,6 @@
                 <tbody>
                 @foreach ($pasadas as $reserva)
                     <tr>
-                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
                         <td>{{ $reserva->ride->salida }}</td>
                         <td>{{ $reserva->ride->llegada }}</td>
                         <td>{{ $reserva->ride->dia }} {{ $reserva->ride->hora }}</td>
@@ -92,6 +91,7 @@
                             ({{ $reserva->ride->vehiculo_anio }})
                         </td>
                         <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
+                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
                         <td>{{ ucfirst($reserva->estado) }}</td>
                         <td class="text-center">
                             <span class="text-muted">---</span>

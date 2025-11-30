@@ -65,7 +65,7 @@
                 <th>Llegada</th>
                 <th>Día</th>
                 <th>Hora</th>
-                <th>Cupo</th>
+                <th>Espacios</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -80,6 +80,13 @@
                 <td>{{ $ride->hora }}</td>
                 <td>{{ $ride->espacios }}</td>
                 <td>
+
+                {{-- Si no hay espacios --}}
+                @if ($ride->espacios <= 0)
+                    <span style="color: #555;">Completado</span>
+                @else
+
+                    {{-- Si está logueado y es pasajero --}}
                     @auth
                         @if(auth()->user()->rol == 'pasajero')
                             <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST">
@@ -89,12 +96,20 @@
                                 </button>
                             </form>
                         @endif
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-warning btn-sm">
-                            Inicia sesión
-                        </a>
                     @endauth
-                </td>
+
+                    {{-- Si NO está logueado: mostrar botón que lanza alerta --}}
+                    @guest
+                        <button type="button" class="btn btn-success btn-sm"
+                            onclick="alert('Debes iniciar sesión para reservar un ride.')">
+                            Reservar
+                        </button>
+                    @endguest
+
+                @endif
+
+            </td>
+
             </tr>
         @endforeach
         </tbody>

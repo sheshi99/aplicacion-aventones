@@ -9,20 +9,29 @@ class RidePublicoController extends Controller
 {
     public function index(Request $request)
     {
+
     $query = Ride::query();
 
-    // Campo seleccionado (salida, llegada, dia)
-    $campo = $request->get('campo');
+      // FILTRO: LUGAR DE SALIDA
+        if ($request->filled('salida')) {
+            $query->where('salida', 'LIKE', '%' . $request->salida . '%');
+        }
 
-    // Dirección (asc / desc)
-    $direccion = $request->get('direccion', 'asc');
+        // FILTRO: LUGAR DE LLEGADA
+        if ($request->filled('llegada')) {
+            $query->where('llegada', 'LIKE', '%' . $request->llegada . '%');
+        }
 
-    // Si seleccionó un campo, se ordena por ese campo
-    if ($campo) {
-        $query->orderBy($campo, $direccion);
-    }
+        // ORDENAR
+        $campo = $request->get('campo');
+        $direccion = $request->get('direccion', 'asc');
 
-    $rides = $query->get();
+        if ($campo) {
+            $query->orderBy($campo, $direccion);
+        }
+
+        // Obtener resultados
+        $rides = $query->get();
 
     return view('rides.publicos', compact('rides'));
     }

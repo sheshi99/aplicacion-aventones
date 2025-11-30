@@ -26,18 +26,44 @@ class ReservaController extends Controller
         return redirect()->back()->with('success','Reserva enviada');
     }
 
-    public function reservasPasajero()
-    {
-        $reservas = Reserva::where('id_pasajero', Auth::id())
-            ->with(['ride', 'ride.chofer'])
-            ->orderBy('id_reserva', 'desc')
-            ->get();
 
-        return view('reservas.pasajero', compact('reservas'));
+    private function clasificar($reservas)
+    {
+        $activas = [];
+        $pasadas = [];
+        $now = now()->format('Y-m-d H:i:s');
+
+        foreach($reservas as $r) {
+            $fechaHora = $r->ride->dia . ' ' . $r->ride->hora;
+            if ($fechaHora >= $now && in_array($r->estado, ['pendiente','aceptada','cancelada','rechazada'])) {
+                $activas[] = $r;
+            } else {
+                if ($r->estado === 'aceptada' && $fechaHora < $now) {
+                    $r->estado = 'realizado';
+                }
+                $pasadas[] = $r;
+            }
+        }
+        return ['activas'=>$activas, 'pasadas'=>$pasadas];
     }
 
 
-    // Pasajero cancela
+    public function reservasPasajero()
+    {
+        $reservas = Reserva::with(['ride','ride.chofer'])
+            ->where('id_pasajero', Auth::id())
+            ->orderBy('id_reserva','desc')
+            ->get();
+
+        $clasificadas = $this->clasificar($reservas);
+
+        return view('reservas.pasajero', [
+            'activas' => $clasificadas['activas'],
+            'pasadas' => $clasificadas['pasadas']
+        ]);
+    }
+
+
     public function cancelar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -76,7 +102,12 @@ class ReservaController extends Controller
         ->orderBy('id_reserva', 'desc')
         ->get();
 
-        return view('reservas.chofer', compact('reservas'));
+        $clasificadas = $this->clasificar($reservas);
+
+        return view('reservas.chofer', [
+            'activas' => $clasificadas['activas'],
+            'pasadas' => $clasificadas['pasadas']
+        ]);
     }
 
 

@@ -10,8 +10,6 @@
     <form method="GET" action="{{ route('rides.publicos') }}" class="mb-4">
 
         <div class="row g-3">
-
-            {{-- FILTROS EXISTENTES --}}
             <div class="col-md-4">
                 <input type="text" 
                        name="salida" 
@@ -28,7 +26,6 @@
                        value="{{ request('llegada') }}">
             </div>
 
-            {{-- NUEVO: ORDENAR POR --}}
             <div class="col-md-3">
                 <select name="campo" class="form-select">
                     <option value="">Ordenar por...</option>
@@ -38,7 +35,6 @@
                 </select>
             </div>
 
-            {{-- ASC / DESC --}}
             <div class="col-md-3">
                 <select name="direccion" class="form-select">
                     <option value="asc"  {{ request('direccion')=='asc' ? 'selected' : '' }}>Ascendente</option>
@@ -51,10 +47,8 @@
                     Aplicar
                 </button>
             </div>
-
         </div>
     </form>
-
 
     {{-- TABLA DE RESULTADOS --}}
     <table class="table table-bordered table-striped">
@@ -66,6 +60,8 @@
                 <th>Día</th>
                 <th>Hora</th>
                 <th>Espacios</th>
+                <th>Costo</th>
+                <th>Vehículo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -79,37 +75,35 @@
                 <td>{{ $ride->dia }}</td>
                 <td>{{ $ride->hora }}</td>
                 <td>{{ $ride->espacios }}</td>
+                <td>₡{{ number_format($ride->costo, 0) }}</td>
                 <td>
+                    {{ $ride->vehiculo_placa }}<br>
+                    {{ $ride->vehiculo_marca }} {{ $ride->vehiculo_modelo }}
+                    ({{ $ride->vehiculo_anio }})
+                </td>
+                <td>
+                    @if ($ride->espacios <= 0)
+                        <span style="color: #555;">Completado</span>
+                    @else
+                        @auth
+                            @if(auth()->user()->rol == 'pasajero')
+                                <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Reservar
+                                    </button>
+                                </form>
+                            @endif
+                        @endauth
 
-                {{-- Si no hay espacios --}}
-                @if ($ride->espacios <= 0)
-                    <span style="color: #555;">Completado</span>
-                @else
-
-                    {{-- Si está logueado y es pasajero --}}
-                    @auth
-                        @if(auth()->user()->rol == 'pasajero')
-                            <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    Reservar
-                                </button>
-                            </form>
-                        @endif
-                    @endauth
-
-                    {{-- Si NO está logueado: mostrar botón que lanza alerta --}}
-                    @guest
-                        <button type="button" class="btn btn-success btn-sm"
-                            onclick="alert('Debes iniciar sesión para reservar un ride.')">
-                            Reservar
-                        </button>
-                    @endguest
-
-                @endif
-
-            </td>
-
+                        @guest
+                            <button type="button" class="btn btn-success btn-sm"
+                                onclick="alert('Debes iniciar sesión para reservar un ride.')">
+                                Reservar
+                            </button>
+                        @endguest
+                    @endif
+                </td>
             </tr>
         @endforeach
         </tbody>

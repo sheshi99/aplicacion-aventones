@@ -1,4 +1,9 @@
-@extends('layouts.ridesPublicos')
+@php
+    $layout = auth()->check() ? 'layouts.pasajero' : 'layouts.ridesPublicos';
+@endphp
+
+@extends($layout)
+
 @section('content')
 <div class="container mt-4">
 

@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-primary-subtle">
+<body class="d-flex min-vh-100 bg-light">
 
     <!-- SIDEBAR -->
     <aside class="d-flex flex-column p-4 bg-primary text-white" style="width: 250px;">

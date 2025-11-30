@@ -3,13 +3,11 @@
 @section('content')
 <div class="container">
 
+    <x-mensaje />
+
     <h2 class="mb-4">Listado de Rides</h2>
 
     <a href="{{ route('rides.create') }}" class="btn btn-primary mb-3">Crear Ride</a>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
     <table class="table table-bordered">
         <thead>

@@ -27,7 +27,6 @@ class vehiculo extends Model
     {
         return $this->belongsTo(Usuario::class, 'id_chofer', 'id_usuario');
     }
-    
 
     public function rides()
     {

@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Reserva;
+use App\Models\Vehiculo;
+use App\Models\User;
 
 class Ride extends Model
 {
@@ -39,9 +42,9 @@ class Ride extends Model
     }
 
 
-    /*public function reservas()
+    public function reservas()
     {
         return $this->hasMany(Reserva::class, 'id_ride', 'id_ride');
-    }*/
+    }
 
 }

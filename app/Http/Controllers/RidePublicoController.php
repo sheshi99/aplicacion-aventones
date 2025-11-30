@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 
 class RidePublicoController extends Controller
 {
+   
     public function index(Request $request)
     {
+        $now = date('Y-m-d H:i:s'); // fecha y hora actual
 
-    $query = Ride::query();
+        $query = Ride::whereRaw("CONCAT(dia, ' ', hora) >= ?", [$now]);
 
-      // FILTRO: LUGAR DE SALIDA
+        // FILTRO: LUGAR DE SALIDA
         if ($request->filled('salida')) {
             $query->where('salida', 'LIKE', '%' . $request->salida . '%');
         }
@@ -33,7 +35,8 @@ class RidePublicoController extends Controller
         // Obtener resultados
         $rides = $query->get();
 
-    return view('rides.publicos', compact('rides'));
+        return view('rides.publicos', compact('rides'));
     }
+
 
 }

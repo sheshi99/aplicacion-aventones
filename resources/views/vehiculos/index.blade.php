@@ -2,12 +2,10 @@
 
 @section('content')
 <div class="container mt-4">
-
-    <x-mensaje />
     
     <h2 class="mb-3">Mis Vehículos</h2>
 
-    <a href="{{ route('vehiculos.create') }}" class="btn btn-primary mb-3">➕ Registrar Vehículo</a>
+    <a href="{{ route('vehiculos.create') }}" class="btn btn-primary mb-3">Registrar Vehículo</a>
 
     <div class="row">
         @forelse($vehiculos as $vehiculo)

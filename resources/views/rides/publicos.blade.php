@@ -69,7 +69,7 @@
 
     {{-- TABLA DE RESULTADOS --}}
     <table class="table table-bordered table-striped">
-        <thead>
+        <thead class= "table-light">
             <tr>
                 <th>Nombre</th>
                 <th>Salida</th>

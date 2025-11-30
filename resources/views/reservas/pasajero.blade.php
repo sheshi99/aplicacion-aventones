@@ -4,13 +4,11 @@
 
 <h1 class="mb-4 fw-bold text-primary">Mis Reservas</h1>
 
-<x-mensaje />
-
 <h3>Reservas Activas</h3>
 <div class="card shadow-sm mb-4">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0 align-middle">
+            <table class="table table-bordered table-striped">
                 <thead class="table-light">
                     <tr>
                         <th>Salida</th>

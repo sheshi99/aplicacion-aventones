@@ -33,8 +33,8 @@
         </a>
 
 
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered table-striped">
+            <thead class= "table-light">
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>

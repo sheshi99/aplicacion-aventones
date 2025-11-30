@@ -3,8 +3,6 @@
 @section('content')
 <div class="container">
 
-    <x-mensaje />
-
     <h2 class="mb-4">Listado de Rides</h2>
 
     <a href="{{ route('rides.create') }}" class="btn btn-primary mb-3">Crear Ride</a>
@@ -14,8 +12,8 @@
         Nota: Los rides con reservas aceptadas no pueden ser editados ni eliminados.
     </p>
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class= "table-light">
             <tr>
                 <th>Nombre</th>
                 <th>Salida</th>
@@ -48,13 +46,10 @@
                                 Editar
                             </a>
 
-                            <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST">
+                            <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST" onsubmit="return confirm('¿Eliminar este vehículo?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Eliminar ride?')">
-                                    Eliminar
-                                </button>
+                                <button class="btn btn-danger btn-sm">🗑 Eliminar</button>
                             </form>
                         @else
                             <!-- Ride con reservas aceptadas -->

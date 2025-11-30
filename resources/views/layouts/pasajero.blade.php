@@ -1,66 +1,91 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Panel Pasajero')</title>
+@if(auth()->check() && auth()->user()->rol == 'pasajero')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    {{-- 📌 LAYOUT PARA PASAJEROS LOGUEADOS --}}
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@yield('title', 'Panel Pasajero')</title>
 
-<body class="d-flex min-vh-100 bg-light">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
 
-    <!-- SIDEBAR (mismo diseño, color amarillo) -->
-    <aside class="d-flex flex-column p-4 bg-warning text-dark" style="width: 250px;">
-        
-        <h2 class="fs-4 mb-4">Panel Pasajero</h2>
+    <body class="d-flex min-vh-100 bg-light">
 
-        <nav class="nav flex-column">
+        <!-- SIDEBAR -->
+        <aside class="d-flex flex-column p-4 bg-warning text-dark" style="width: 250px;">
+            
+            <h2 class="fs-4 mb-4">Panel Pasajero</h2>
 
-            <a href="{{ route('pasajero.panel') }}"
-               class="nav-link text-dark mb-2 {{ request()->routeIs('pasajero.panel') ? 'fw-bold rounded px-2' : '' }}">
-                Dashboard
-            </a>
+            <nav class="nav flex-column">
 
-            <a href="{{ route('rides.publicos') }}"
+                <a href="{{ route('pasajero.panel') }}"
+                class="nav-link text-dark mb-2 {{ request()->routeIs('pasajero.panel') ? 'fw-bold rounded px-2' : '' }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ route('rides.publicos') }}"
                 class="nav-link text-dark mb-2 {{ request()->routeIs('rides.publicos') ? 'fw-bold rounded px-2' : '' }}">
-                Buscar Rides
-            </a>
+                    Buscar Rides
+                </a>
 
-            <a href="{{ route('reservas.mias') }}"
-               class="nav-link text-white mb-2 {{ request()->routeIs('reservas.mias') ? 'fw-bold text-success rounded px-2' : '' }}">
-                Mis Reservas
-            </a>
+                <a href="{{ route('reservas.mias') }}"
+                class="nav-link text-dark mb-2 {{ request()->routeIs('reservas.mias') ? 'fw-bold rounded px-2' : '' }}">
+                    Mis Reservas
+                </a>
 
-            <a href="{{ route('profile.edit') }}"
-               class="nav-link text-dark mb-2 {{ request()->routeIs('profile.edit') ? 'fw-bold rounded px-2' : '' }}">
-                Perfil
-            </a>
+                <a href="{{ route('profile.edit') }}"
+                class="nav-link text-dark mb-2 {{ request()->routeIs('profile.edit') ? 'fw-bold rounded px-2' : '' }}">
+                    Perfil
+                </a>
 
-            <a class="nav-link text-dark"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-               Cerrar sesión
-            </a>
+                <a class="nav-link text-dark"
+                href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Cerrar sesión
+                </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
 
-        </nav>
-    </aside>
+            </nav>
+        </aside>
 
-    <!-- CONTENIDO -->
-    <main class="flex-grow-1 p-4">
+        <!-- CONTENIDO -->
+        <main class="flex-grow-1 p-4">
+            <h1 class="h3 border-bottom pb-2 mb-4">
+                @yield('title')
+            </h1>
 
-        <!-- Encabezado igual a los demás -->
-        <h1 class="h3 border-bottom pb-2 mb-4">
-            @yield('title', 'Panel Pasajero')
-        </h1>
+            @yield('content')
+        </main>
 
-        @yield('content')
+    </body>
+    </html>
 
-    </main>
+@else
 
-</body>
-</html>
+    {{-- 📌 LAYOUT PARA VISITANTES (SIN LOGIN) --}}
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@yield('title', 'Página Pública')</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+
+        <!-- Contenido centrado sin sidebar -->
+        <div class="container py-5">
+            @yield('content')
+        </div>
+
+    </body>
+    </html>
+
+@endif

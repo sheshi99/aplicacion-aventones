@@ -9,6 +9,11 @@
 
     <a href="{{ route('rides.create') }}" class="btn btn-primary mb-3">Crear Ride</a>
 
+       <!-- Mensaje explicativo menos llamativo -->
+    <p class="text-muted small mb-3">
+        Nota: Los rides con reservas aceptadas no pueden ser editados ni eliminados.
+    </p>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -18,6 +23,7 @@
                 <th>Día</th>
                 <th>Hora</th>
                 <th>Costo</th>
+                <th>Espacios</th>
                 <th>Vehículo</th>
                 <th>Opciones</th>
             </tr>
@@ -32,24 +38,29 @@
                     <td>{{ $ride->dia }}</td>
                     <td>{{ $ride->hora }}</td>
                     <td>₡{{ $ride->costo }}</td>
+                    <td>{{ $ride->espacios }}</td>
                     <td>{{ $ride->vehiculo_placa }}</td>
 
                     <td class="d-flex gap-2">
-                        <a href="{{ route('rides.edit', $ride->id_ride) }}" class="btn btn-warning btn-sm">
-                            Editar
-                        </a>
+                        @if($ride->reservas()->where('estado', 'aceptada')->count() == 0)
+                            <!-- Mostrar botones solo si no hay reservas aceptadas -->
+                            <a href="{{ route('rides.edit', $ride->id_ride) }}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
 
-                        <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-
-                            <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('¿Eliminar ride?')">
-                                Eliminar
-                            </button>
-                        </form>
+                            <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Eliminar ride?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        @else
+                            <!-- Ride con reservas aceptadas -->
+                            <span class="text-muted">---</span>
+                        @endif
                     </td>
-
                 </tr>
             @endforeach
         </tbody>

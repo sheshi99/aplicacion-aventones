@@ -48,6 +48,12 @@ class RideController extends Controller
 
     public function edit(Ride $ride)
     {
+
+         // Verificar si tiene reservas aceptadas
+        if ($ride->reservas()->where('estado', 'aceptada')->count() > 0) {
+            return back()->with('error', 'No se puede editar un ride que tiene reservas aceptadas.');
+        }
+
         $vehiculos = Vehiculo::where('id_chofer', auth()->id())->get();
         return view('rides.edit', compact('ride', 'vehiculos'));
     }

@@ -6,7 +6,8 @@
 
 <x-mensaje />
 
-<div class="card shadow-sm">
+<h3>Reservas Activas</h3>
+<div class="card shadow-sm mb-4">
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0 align-middle">
@@ -15,48 +16,29 @@
                         <th>Chofer</th>
                         <th>Salida</th>
                         <th>Llegada</th>
-                        <th>Fecha</th>
+                        <th>Fecha y Hora</th>
                         <th>Vehículo</th>
                         <th>Costo</th>
                         <th>Estado</th>
                         <th class="text-center">Acción</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                @foreach ($reservas as $reserva)
+                @foreach ($activas as $reserva)
                     <tr>
-
-                        {{-- Chofer --}}
-                        <td>
-                            {{ $reserva->ride->chofer->name }}
-                            {{ $reserva->ride->chofer->apellido }}
-                        </td>
-
-                        {{-- Rutas --}}
+                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
                         <td>{{ $reserva->ride->salida }}</td>
                         <td>{{ $reserva->ride->llegada }}</td>
-
-                        {{-- Fecha --}}
                         <td>{{ $reserva->ride->dia }} {{ $reserva->ride->hora }}</td>
-
-                        {{-- Vehículo --}}
                         <td>
                             {{ $reserva->ride->vehiculo_placa }}<br>
                             {{ $reserva->ride->vehiculo_marca }}
                             {{ $reserva->ride->vehiculo_modelo }}
                             ({{ $reserva->ride->vehiculo_anio }})
                         </td>
-
-                        {{-- Costo --}}
                         <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
-
-                        {{-- Estado (sin colores) --}}
                         <td>{{ ucfirst($reserva->estado) }}</td>
-
-                        {{-- Acción: solo cancelar si está pendiente o aceptada --}}
                         <td class="text-center">
-
                             @if(in_array($reserva->estado, ['pendiente','aceptada']))
                                 <form action="{{ route('reservas.cancelar', $reserva->id_reserva) }}"
                                       method="POST"
@@ -70,13 +52,53 @@
                             @else
                                 <span class="text-muted">N/A</span>
                             @endif
-
                         </td>
-
                     </tr>
                 @endforeach
                 </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
+<h3>Reservas Pasadas</h3>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Chofer</th>
+                        <th>Salida</th>
+                        <th>Llegada</th>
+                        <th>Fecha y Hora</th>
+                        <th>Vehículo</th>
+                        <th>Costo</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($pasadas as $reserva)
+                    <tr>
+                        <td>{{ $reserva->ride->chofer->name }} {{ $reserva->ride->chofer->apellido }}</td>
+                        <td>{{ $reserva->ride->salida }}</td>
+                        <td>{{ $reserva->ride->llegada }}</td>
+                        <td>{{ $reserva->ride->dia }} {{ $reserva->ride->hora }}</td>
+                        <td>
+                            {{ $reserva->ride->vehiculo_placa }}<br>
+                            {{ $reserva->ride->vehiculo_marca }}
+                            {{ $reserva->ride->vehiculo_modelo }}
+                            ({{ $reserva->ride->vehiculo_anio }})
+                        </td>
+                        <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
+                        <td>{{ ucfirst($reserva->estado) }}</td>
+                        <td class="text-center">
+                            <span class="text-muted">---</span>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
         </div>
     </div>

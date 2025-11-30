@@ -64,11 +64,11 @@ Route::middleware(['auth','rol:pasajero'])->group(function () {
         ->name('reservas.store');
 
     // Cancelar reserva
-    Route::delete('/reservas/{reserva}', [ReservaController::class, 'cancel'])
-        ->name('reservas.cancel');
+    Route::delete('/reservas/{reserva}', [ReservaController::class, 'cancelar'])
+        ->name('reservas.cancelar');
 
     // Ver reservas del pasajero
-    Route::get('/mis-reservas', [ReservaController::class, 'misReservas'])
+    Route::get('/mis-reservas', [ReservaController::class, 'reservasPasajero'])
         ->name('reservas.mias');
 });
 

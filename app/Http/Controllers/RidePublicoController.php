@@ -7,31 +7,36 @@ use Illuminate\Http\Request;
 
 class RidePublicoController extends Controller
 {
+   
     public function index(Request $request)
     {
-        $query = Ride::query();
+        $now = date('Y-m-d H:i:s'); // fecha y hora actual
 
-        // Filtros
-        if ($request->salida) {
-            $query->where('salida','LIKE',"%".$request->salida."%");
+        $query = Ride::whereRaw("CONCAT(dia, ' ', hora) >= ?", [$now]);
+
+        // FILTRO: LUGAR DE SALIDA
+        if ($request->filled('salida')) {
+            $query->where('salida', 'LIKE', '%' . $request->salida . '%');
         }
 
-        if ($request->llegada) {
-            $query->where('llegada','LIKE',"%".$request->llegada."%");
+        // FILTRO: LUGAR DE LLEGADA
+        if ($request->filled('llegada')) {
+            $query->where('llegada', 'LIKE', '%' . $request->llegada . '%');
         }
 
-        // Ordenamiento
-        if ($request->orden == 'fecha') {
-            $query->orderBy('dia');
-        } elseif ($request->orden == 'origen') {
-            $query->orderBy('salida');
-        } elseif ($request->orden == 'destino') {
-            $query->orderBy('llegada');
+        // ORDENAR
+        $campo = $request->get('campo');
+        $direccion = $request->get('direccion', 'asc');
+
+        if ($campo) {
+            $query->orderBy($campo, $direccion);
         }
 
+        // Obtener resultados
         $rides = $query->get();
 
-        return view('rides.publicos', compact('rides')); 
-
+        return view('rides.publicos', compact('rides'));
     }
+
+
 }

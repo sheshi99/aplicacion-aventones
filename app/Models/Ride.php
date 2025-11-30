@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Reserva;
+use App\Models\Vehiculo;
+use App\Models\User;
 
 class Ride extends Model
 {
-     protected $table = 'rides';
+    protected $table = 'rides';
     protected $primaryKey = 'id_ride';
     public $timestamps = false; // No tiene created_at ni updated_at
 
@@ -36,6 +39,12 @@ class Ride extends Model
     public function chofer()
     {
         return $this->belongsTo(User::class, 'id_chofer', 'id');
+    }
+
+
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class, 'id_ride', 'id_ride');
     }
 
 }

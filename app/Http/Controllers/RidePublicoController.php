@@ -4,27 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Ride;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class RidePublicoController extends Controller
 {
    
     public function index(Request $request)
     {
-        $now = date('Y-m-d H:i:s'); // fecha y hora actual
+        // Fecha y hora actual
+        $now = Carbon::now()->format('Y-m-d H:i:s');
 
+        // Consulta base: rides futuros
         $query = Ride::whereRaw("CONCAT(dia, ' ', hora) >= ?", [$now]);
 
-        // FILTRO: LUGAR DE SALIDA
+
         if ($request->filled('salida')) {
             $query->where('salida', 'LIKE', '%' . $request->salida . '%');
         }
 
-        // FILTRO: LUGAR DE LLEGADA
         if ($request->filled('llegada')) {
             $query->where('llegada', 'LIKE', '%' . $request->llegada . '%');
         }
 
-        // ORDENAR
+        // Ordenar
         $campo = $request->get('campo');
         $direccion = $request->get('direccion', 'asc');
 

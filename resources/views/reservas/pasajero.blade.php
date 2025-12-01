@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1 class="mb-4 fw-bold text-primary">Mis Reservas</h1>
+<h1 class="mb-4 fw-bold ">Mis Reservas</h1>
 
 <x-mensaje />
 

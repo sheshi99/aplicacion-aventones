@@ -75,7 +75,7 @@
                             @csrf
                             @method('PATCH')
 
-                            @if($user->estado === 'inactivo')
+                            @if($user->estado === 'inactivo' || $user->estado === 'pendiente')
                                 <button class="btn btn-success btn-sm">
                                     Activar
                                 </button>

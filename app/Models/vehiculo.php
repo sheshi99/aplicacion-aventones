@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Ride;
+
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ride;
 use App\Models\User;

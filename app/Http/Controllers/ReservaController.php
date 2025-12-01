@@ -6,6 +6,7 @@ use App\Models\Reserva;
 use App\Models\Ride;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ReservaController extends Controller
 {
@@ -31,12 +32,13 @@ class ReservaController extends Controller
     {
         $activas = [];
         $pasadas = [];
-        $now = now()->format('Y-m-d H:i:s');
+        $ahora = Carbon::now(); // fecha y hora actual
 
         foreach($reservas as $r) {
-            $fechaHora = $r->ride->dia . ' ' . $r->ride->hora;
+            // Convertimos la fecha y hora del ride a un objeto Carbon
+            $fechaHora = Carbon::parse($r->ride->dia . ' ' . $r->ride->hora);
 
-            if ($fechaHora >= $now) {
+            if ($fechaHora->gte($ahora)) { // gte = mayor o igual
                 $activas[] = $r;
             } else {
                 // Si estaba aceptada y ya pasó, marcar como realizado
@@ -49,7 +51,6 @@ class ReservaController extends Controller
 
         return ['activas' => $activas, 'pasadas' => $pasadas];
     }
-
 
     public function reservasPasajero()
     {

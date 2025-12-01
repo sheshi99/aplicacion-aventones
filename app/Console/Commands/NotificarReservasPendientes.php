@@ -23,7 +23,12 @@ class NotificarReservasPendientes extends Command
 
         $reservas = Reserva::where('estado', 'Pendiente')
             ->where('created_at', '<=', $limite)
+            ->whereHas('ride', function ($q) {
+                $q->whereDate('dia', '>=', today());
+            })
             ->get();
+
+
 
         if ($reservas->isEmpty()) {
             $this->info("No hay reservas pendientes.");

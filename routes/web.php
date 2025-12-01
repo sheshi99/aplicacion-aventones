@@ -11,9 +11,6 @@ use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\RidePublicoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,7 +29,12 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
 require __DIR__.'/auth.php';
 
 
-// Rutas exclusivas para admin
+
+
+
+// ===================================
+//          ADMIN
+// ===================================
 Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
 
     // Dashboard del admin
@@ -53,11 +55,10 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
 
 });
 
-Route::post('/reservas/intento/{ride}', 
-    [\App\Http\Controllers\RidePublicoController::class, 'intento']
-)->name('reservas.intento');
 
-
+// ===================================
+//          PASAJERO
+// ===================================
 Route::middleware(['auth','rol:pasajero'])->group(function () {
 
     Route::get('/pasajero', [PasajeroDashboard::class, 'index'])
@@ -79,15 +80,28 @@ Route::middleware(['auth','rol:pasajero'])->group(function () {
 });
 
 
+// ===================================
+// PÁGINA PÚBLICA
+// ===================================
+Route::get('/', [RidePublicoController::class, 'index'])
+    ->name('rides.publicos');
 
-// Rutas exclusivas para CHOFER
+
+Route::post('/reservas/intento/{ride}', 
+    [\App\Http\Controllers\RidePublicoController::class, 'intento']
+)->name('reservas.intento');
+
+
+// ===================================
+//          CHOFER
+// ===================================
 Route::middleware(['auth', 'rol:chofer'])->group(function () {
 
     Route::get('/chofer', [ChoferDashboard::class, 'index'])
         ->name('chofer.panel');
 
-      /* ============================
-       CRUD VEHICULOS
+    /* ============================
+       VEHICULOS
     ============================ */
 
     Route::get('/vehiculos', [VehiculoController::class, 'index'])
@@ -109,7 +123,7 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
         ->name('vehiculos.destroy');
 
     /* ============================
-       CRUD RIDES
+         RIDES
     ============================ */
     Route::get('/rides', [RideController::class, 'index'])
         ->name('rides.index');
@@ -129,9 +143,9 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
     Route::delete('/rides/{ride}', [RideController::class, 'destroy'])
         ->name('rides.destroy');   
 
-      /* ===========================
+    /* ===========================
            RESERVAS 
-       =========================== */
+    =========================== */
 
     // Ver reservas recibidas para sus rides
     Route::get('/reservas-chofer', [ReservaController::class, 'reservasChofer'])
@@ -146,12 +160,6 @@ Route::middleware(['auth', 'rol:chofer'])->group(function () {
         ->name('reservas.rechazar');
 });
 
-
-// ===================================
-// PÁGINA PÚBLICA
-// ===================================
-Route::get('/', [RidePublicoController::class, 'index'])
-    ->name('rides.publicos');
 
 
 

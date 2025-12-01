@@ -10,43 +10,62 @@ use App\Mail\NotificarChoferReservaPendiente;
 
 class NotificarReservasPendientes extends Command
 {
-    protected $signature = 'notificar:reservas {minutos}';
-    protected $description = 'Notifica a los choferes sobre reservas pendientes por más de X minutos';
+    protected $signature = 'notificar:reservas {minutos?}';
+    protected $description = 'Notifica reservas pendientes con más de X minutos';
 
     public function handle()
     {
+        // --- Obtener o preguntar minutos ---
         $minutos = $this->argument('minutos');
 
-        $this->info("Buscando reservas con más de $minutos minutos...");
+        if (!$minutos) {
+            $minutos = $this->ask("Ingrese los minutos");
+        }
 
-        $limite = Carbon::now()->subMinutes($minutos);
-
-        $reservas = Reserva::where('estado', 'Pendiente')
-            ->where('created_at', '<=', $limite)
-            ->whereHas('ride', function ($q) {
-                $q->whereDate('dia', '>=', today());
-            })
-            ->get();
-
-
-
-        if ($reservas->isEmpty()) {
-            $this->info("No hay reservas pendientes.");
+        if (!is_numeric($minutos) || $minutos <= 0) {
+            $this->error("Ingrese un número válido.");
             return;
         }
 
-        foreach ($reservas as $reserva) {
+        $this->info("⏳ Buscando reservas pendientes con más de $minutos minutos...");
 
-            // Guardar minutos para usar en el correo
-            $reserva->minutos = $minutos;
+        $limite = Carbon::now()->subMinutes($minutos);
 
-            // Importante: el atributo correcto es ->email
-            $correoChofer = $reserva->ride->chofer->email;
+        // --- Consulta parecida a tu SQL ---
+        $reservas = Reserva::where('estado', 'Pendiente')
+            ->where('created_at', '<=', $limite)
+            ->whereHas('ride', function ($q) {
+                $q->where('dia', '>=', today()); // NO usar hora
+            })
+            ->get();
 
-            Mail::to($correoChofer)
-                ->send(new NotificarChoferReservaPendiente($reserva));
+        if ($reservas->isEmpty()) {
+            $this->info("✅ No hay reservas pendientes.");
+            return;
         }
 
-        $this->info("Correos enviados correctamente.");
+        $total = 0;
+
+        // --- Enviar correos ---
+        foreach ($reservas as $reserva) {
+
+            $chofer = $reserva->ride->chofer;
+
+            $this->info("📩 Enviando a: {$chofer->nombre} ({$chofer->email})...");
+
+            $reserva->minutos = $minutos; // Igual que tu script
+
+            try {
+                Mail::to($chofer->email)
+                    ->send(new NotificarChoferReservaPendiente($reserva));
+
+                $this->info("✅ Enviado");
+                $total++;
+            } catch (\Exception $e) {
+                $this->error("❌ Error: " . $e->getMessage());
+            }
+        }
+
+        $this->info("\n🎉 Total de correos enviados: $total");
     }
 }

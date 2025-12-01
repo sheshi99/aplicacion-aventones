@@ -20,7 +20,7 @@ class NotificarChoferReservaPendiente extends Mailable
 
     public function build()
     {
-        return $this->subject('Tienes reservas pendientes')
+        return $this->subject("🚗 Tienes reservas pendientes")
                     ->view('emails.notificar_chofer');
     }
 }

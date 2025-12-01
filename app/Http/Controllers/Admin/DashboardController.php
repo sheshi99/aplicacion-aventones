@@ -113,11 +113,12 @@ class DashboardController extends Controller
         // 3. Superadmin puede activar/desactivar a cualquier usuario
         if ($auth->id == $superAdminId) {
 
-            if ($user->estado === 'inactivo') {
-                $user->estado = 'activo';
-            } else {
-                $user->estado = 'inactivo';
-            }
+        if ($user->estado === 'inactivo' || $user->estado === 'pendiente') {
+            $user->estado = 'activo';
+        } else {
+            $user->estado = 'inactivo';
+        }
+
 
             $user->save();
             return back()->with('success', 'Estado del usuario actualizado correctamente.');
@@ -130,12 +131,12 @@ class DashboardController extends Controller
                 return back()->with('error', 'No puedes desactivar o activar a otro administrador.');
             }
 
-            // Puede activar o desactivar usuarios normales
-            if ($user->estado === 'inactivo') {
+            if ($user->estado === 'inactivo' || $user->estado === 'pendiente') {
                 $user->estado = 'activo';
             } else {
                 $user->estado = 'inactivo';
             }
+
 
             $user->save();
             return back()->with('success', 'Estado del usuario actualizado correctamente.');

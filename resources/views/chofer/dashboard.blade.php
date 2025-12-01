@@ -1,18 +1,14 @@
 @extends('layouts.chofer')
 
-@section('title', 'Dashboard Chofer')
-<div class="row g-3">
-    <div class="col-md-4">
-        <div class="card p-3">
-            <h5>Rides Pendientes</h5>
-            <p>0 rides pendientes</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-3">
-            <h5>Rides Completados</h5>
-            <p>0 rides completados</p>
-        </div>
+@section('content')
+<div class="container mt-4">
+
+    <!-- Bienvenida -->
+    <div class="jumbotron bg-primary text-white p-5 rounded shadow-sm mb-4">
+        <h1 class="display-5 fw-bold">¡Bienvenido, {{ auth()->user()->name }}!</h1>
+        <p class="lead">Este es tu panel de chofer, aquí puedes ver tus rides y gestionar tus reservas.</p>
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.5);">
+        <p class="mb-0">Mantente al tanto de tus rides pendientes y completados.</p>
     </div>
 </div>
 @endsection

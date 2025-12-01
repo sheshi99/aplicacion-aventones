@@ -11,7 +11,10 @@
 
         @include('rides.form')
 
-        <button class="btn btn-primary mt-3">Actualizar Ride</button>
+        <div class="d-flex justify-content-end gap-2 mt-30">
+            <button class="btn btn-success">Actualizar Ride</button>
+            <a href="{{ route('rides.index') }}" class="btn btn-danger">Cancelar</a>
+        </div>
     </form>
 
 </div>

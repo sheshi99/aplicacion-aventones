@@ -1,6 +1,5 @@
 @extends('layouts.admin')
-
-@section('title', 'Usuarios Registrados')
+@section('content')
 <div class="row g-3">
     <div class="col-md-12">
 

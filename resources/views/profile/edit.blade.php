@@ -11,8 +11,6 @@
 
 @extends($layout)
 
-@section('title', 'Perfil')
-
 @section('content')
 
 <div class="container">

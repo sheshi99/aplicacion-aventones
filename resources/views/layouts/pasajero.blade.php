@@ -11,7 +11,7 @@
 <body class="d-flex flex-column min-vh-100 bg-light">
 
     <!-- HEADER / MENÚ SUPERIOR -->
-    <header class="bg-warning text-dark py-3">
+    <header class="bg-primary text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
 
             <!-- Logo o Título -->
@@ -20,23 +20,23 @@
             <!-- Menú -->
             <nav class="d-flex gap-5">
                 <a href="{{ route('pasajero.panel') }}" 
-                   class="text-dark text-decoration-none {{ request()->routeIs('pasajero.panel') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none {{ request()->routeIs('pasajero.panel') ? 'fw-bold text-primary' : '' }}">
                     Dashboard
                 </a>
                 <a href="{{ route('rides.publicos') }}" 
-                   class="text-dark text-decoration-none {{ request()->routeIs('rides.publicos') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none {{ request()->routeIs('rides.publicos') ? 'fw-bold text-primary' : '' }}">
                     Buscar Rides
                 </a>
                 <a href="{{ route('reservas.mias') }}" 
-                   class="text-dark text-decoration-none {{ request()->routeIs('reservas.mias') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none {{ request()->routeIs('reservas.mias') ? 'fw-bold text-primary' : '' }}">
                     Mis Reservas
                 </a>
                 <a href="{{ route('profile.edit') }}" 
-                   class="text-dark text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-primary' : '' }}">
                     Perfil
                 </a>
                 <a href="{{ route('logout') }}" 
-                   class="text-dark text-decoration-none"
+                   class="text-white text-decoration-none"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar sesión
                 </a>

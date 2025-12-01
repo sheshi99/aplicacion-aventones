@@ -11,7 +11,7 @@
 <body class="d-flex flex-column min-vh-100 bg-light">
 
     <!-- HEADER / MENÚ SUPERIOR -->
-    <header class="bg-success text-white py-3">
+    <header class="bg-primary text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
 
             <!-- Logo o Título -->

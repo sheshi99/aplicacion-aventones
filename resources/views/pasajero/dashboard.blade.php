@@ -1,20 +1,14 @@
 @extends('layouts.pasajero')
 
-@section('title', 'Dashboard Pasajero')
-
 @section('content')
-<div class="row g-3">
-    <div class="col-md-4">
-        <div class="card p-3">
-            <h5>Rides Pendientes</h5>
-            <p>0 rides pendientes</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-3">
-            <h5>Rides Completados</h5>
-            <p>0 rides completados</p>
-        </div>
+<div class="container mt-4">
+
+    <!-- Bienvenida -->
+    <div class="jumbotron bg-primary text-white p-5 rounded shadow-sm mb-4">
+        <h1 class="display-5 fw-bold">¡Bienvenido, {{ auth()->user()->name }}!</h1>
+        <p class="lead">Este es tu panel de pasajero, aquí puedes ver tus rides y gestionar tus reservas.</p>
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.5);">
+        <p class="mb-0">Mantente al tanto de tus reservas activas y completadas.</p>
     </div>
 </div>
 @endsection

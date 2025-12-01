@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\ActivationController; // Importa tu controlador de activación
+use App\Http\Controllers\Auth\ActivationController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;

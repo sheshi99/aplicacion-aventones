@@ -34,7 +34,7 @@ class VehiculoTest extends TestCase
             'modelo' => 'Corolla',
             'anno' => 2020,
             'capacidad_asientos' => 5,
-            'fotografia' => UploadedFile::fake()->create('vehiculo.jpg'), // 👈 así se simula la foto
+            'fotografia' => UploadedFile::fake()->create('vehiculo.jpg'),
         ];
 
         $response = $this->actingAs($chofer)

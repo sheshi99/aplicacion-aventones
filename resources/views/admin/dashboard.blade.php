@@ -40,6 +40,7 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo</th>
+                    <th>Fotografía</th>
                     <th>Rol</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -53,6 +54,18 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->apellido }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>
+                        @if(!empty($user->fotografia))
+                            <img src="{{ asset('storage/' . $user->fotografia) }}" 
+                                alt="{{ $user->name }}" 
+                                width="50" 
+                                height="50" 
+                                class="rounded-circle">
+                        @else
+                            <span>No hay foto</span>
+                        @endif
+                    </td>
+
                     <td>{{ ucfirst($user->rol) }}</td>
                     <td>{{ ucfirst($user->estado) }}</td>
 

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\ActivationController; // Importa tu controlador de activación
+use App\Http\Controllers\Auth\ActivationController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Chofer\DashboardController as ChoferDashboard;
 use App\Http\Controllers\Pasajero\DashboardController as PasajeroDashboard;
@@ -83,6 +83,9 @@ Route::middleware(['auth','rol:pasajero'])->group(function () {
 // Rutas exclusivas para CHOFER
 Route::middleware(['auth', 'rol:chofer'])->group(function () {
 
+    Route::get('/chofer', [ChoferDashboard::class, 'index'])
+        ->name('chofer.panel');
+
       /* ============================
        CRUD VEHICULOS
     ============================ */
@@ -151,13 +154,6 @@ Route::get('/', [RidePublicoController::class, 'index'])
     ->name('rides.publicos');
 
 
-/*Route::get('/hora', function () {
-    return now()->format('Y-m-d H:i:s');
-});
-
-Route::get('/phptime', function () {
-    return date('Y-m-d H:i:s');
-});*/
 
 
 

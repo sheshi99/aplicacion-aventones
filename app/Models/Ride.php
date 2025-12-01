@@ -41,7 +41,6 @@ class Ride extends Model
         return $this->belongsTo(User::class, 'id_chofer', 'id');
     }
 
-
     public function reservas()
     {
         return $this->hasMany(Reserva::class, 'id_ride', 'id_ride');

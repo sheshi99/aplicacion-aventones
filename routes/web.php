@@ -83,9 +83,6 @@ Route::middleware(['auth','rol:pasajero'])->group(function () {
 // Rutas exclusivas para CHOFER
 Route::middleware(['auth', 'rol:chofer'])->group(function () {
 
-    Route::get('/chofer', [ChoferDashboard::class, 'index'])
-        ->name('chofer.panel');
-
       /* ============================
        CRUD VEHICULOS
     ============================ */

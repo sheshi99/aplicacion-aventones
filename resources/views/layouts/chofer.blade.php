@@ -17,11 +17,6 @@
 
         <nav class="nav flex-column">
 
-            <a href="{{ route('chofer.panel') }}"
-               class="nav-link text-white mb-2 {{ request()->routeIs('chofer.panel') ? 'fw-bold text-success rounded px-2' : '' }}">
-                Dashboard
-            </a>
-
             <a href="{{ route('vehiculos.index') }}"
                class="nav-link text-white mb-2 {{ request()->routeIs('vehiculos.index') ? 'fw-bold text-success rounded px-2' : '' }}">
                 Mis Vehículos

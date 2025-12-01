@@ -2,9 +2,7 @@
 
 namespace App\Models;
 use App\Models\Ride;
-
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Ride;
 use App\Models\User;
 
 class Vehiculo extends Model

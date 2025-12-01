@@ -3,11 +3,12 @@
 namespace App\Models;
 use App\Models\User;
 use App\Models\Ride;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reserva extends Model
 {
+    use HasFactory;
     protected $table = 'reservas';
     protected $primaryKey = 'id_reserva';
     public $timestamps = true;

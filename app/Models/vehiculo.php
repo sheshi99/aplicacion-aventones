@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Models;
-use App\Models\Ride;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Ride;
+use App\Models\User;
 
-class vehiculo extends Model
+class Vehiculo extends Model
 {
+    use HasFactory;
+
     protected $table = 'vehiculos';
     protected $primaryKey = 'id_vehiculo';
     public $timestamps = true; 
@@ -22,10 +26,9 @@ class vehiculo extends Model
         'fotografia'
     ];
 
-
     public function chofer()
     {
-        return $this->belongsTo(Usuario::class, 'id_chofer', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_chofer', 'id');
     }
 
     public function rides()

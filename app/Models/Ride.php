@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Reserva;
 use App\Models\Vehiculo;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ride extends Model
 {
+    use HasFactory;
     protected $table = 'rides';
     protected $primaryKey = 'id_ride';
     public $timestamps = false; // No tiene created_at ni updated_at

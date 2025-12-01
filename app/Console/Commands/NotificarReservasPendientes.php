@@ -29,13 +29,16 @@ class NotificarReservasPendientes extends Command
 
         $this->info("⏳ Buscando reservas pendientes con más de $minutos minutos...");
 
+         // --- Limite de creación ---
         $limite = Carbon::now()->subMinutes($minutos);
+        $ahora = Carbon::now();
 
-        // --- Consulta parecida a tu SQL ---
+        // --- Consulta Eloquent ---
         $reservas = Reserva::where('estado', 'Pendiente')
             ->where('created_at', '<=', $limite)
-            ->whereHas('ride', function ($q) {
-                $q->where('dia', '>=', today()); // NO usar hora
+            ->whereHas('ride', function ($q) use ($ahora) {
+                // Solo rides futuros (combinando día y hora)
+                $q->whereRaw("CONCAT(dia, ' ', hora) >= ?", [$ahora->format('Y-m-d H:i:s')]);
             })
             ->get();
 

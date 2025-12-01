@@ -1,8 +1,6 @@
 @extends('layouts.chofer')
 
 @section('title', 'Dashboard Chofer')
-
-@section('content')
 <div class="row g-3">
     <div class="col-md-4">
         <div class="card p-3">

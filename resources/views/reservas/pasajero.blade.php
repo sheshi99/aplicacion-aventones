@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1 class="mb-4 fw-bold ">Mis Reservas</h1>
+<h1 class="mb-4">Mis Reservas</h1>
 
 <x-mensaje />
 
@@ -10,8 +10,8 @@
 <div class="card shadow-sm mb-4">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-light">
+            <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="bg-secondary text-white">
                     <tr>
                         <th>Salida</th>
                         <th>Llegada</th>
@@ -62,11 +62,11 @@
 </div>
 
 <h3>Reservas Pasadas</h3>
-<div class="card shadow-sm">
+<div class="card shadow-sm mb-4">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0 align-middle">
-                <thead class="table-light">
+            <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="bg-secondary text-white">
                     <tr>
                         <th>Salida</th>
                         <th>Llegada</th>

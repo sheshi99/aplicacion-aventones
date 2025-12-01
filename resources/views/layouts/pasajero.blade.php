@@ -51,7 +51,7 @@
 
     <!-- CONTENIDO -->
     <main class="flex-grow-1 p-4">
-
+    <h1 class="h3 border-bottom pb-2 mb-4">@yield('title')</h1>
         @yield('content')
     </main>
 

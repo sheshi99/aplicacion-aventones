@@ -1,25 +1,6 @@
 <x-guest-layout>
 
-    {{-- MENSAJE DE CUENTA ACTIVADA --}}
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    {{-- MENSAJE DE TOKEN INVÁLIDO --}}
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    {{-- Session Status --}}
-    @if (session('status'))
-        <div class="alert alert-info">
-            {{ session('status') }}
-        </div>
-    @endif
+    <x-mensaje />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf

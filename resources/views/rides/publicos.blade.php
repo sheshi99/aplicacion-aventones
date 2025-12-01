@@ -9,26 +9,8 @@
 
     <h1 class="mb-4">Rides disponibles</h1>
 
-        {{-- MENSAJE DE CUENTA ACTIVADA --}}
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+    <x-mensaje />
 
-        {{-- MENSAJE DE TOKEN INVÁLIDO --}}
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        {{-- Session Status --}}
-        @if (session('status'))
-            <div class="alert alert-info">
-                {{ session('status') }}
-            </div>
-        @endif
 
     <form method="GET" action="{{ route('rides.publicos') }}" class="mb-4">
         <div class="row g-3">

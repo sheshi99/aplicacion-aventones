@@ -7,27 +7,8 @@
 <div class="row g-3">
     <div class="col-md-12">
 
-    {{-- MENSAJE DE CUENTA ACTIVADA --}}
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    {{-- MENSAJE DE TOKEN INVÁLIDO --}}
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    {{-- Session Status --}}
-    @if (session('status'))
-        <div class="alert alert-info">
-            {{ session('status') }}
-        </div>
-    @endif
-
+    <x-mensaje />
+    
         <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary mb-3">
             Agregar Administrador
         </a>

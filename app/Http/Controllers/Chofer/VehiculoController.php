@@ -78,7 +78,7 @@ class VehiculoController extends Controller
 
         $request->validate($this->reglasValidacion());
 
-        $foto = $this->procesarFoto($request, $vehiculo ?? null);
+        $foto = $this->procesarFoto($request);
 
         Vehiculo::create([
             'id_chofer' => auth()->id(),

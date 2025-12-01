@@ -26,11 +26,14 @@ class Vehiculo extends Model
         'fotografia'
     ];
 
+    // Un vehículo pertenece a un chofer
     public function chofer()
     {
         return $this->belongsTo(User::class, 'id_chofer', 'id');
+
     }
 
+    // Un vehículo puede tener muchos rides
     public function rides()
     {
         return $this->hasMany(Ride::class, 'id_vehiculo', 'id_vehiculo');

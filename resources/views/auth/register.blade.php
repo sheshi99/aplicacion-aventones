@@ -4,12 +4,6 @@
         $modoAdmin = Auth::check() && Auth::user()->rol === 'admin';
     @endphp
 
-    {{-- MENSAJES DE VALIDACIÓN GLOBAL --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Por favor revise los campos marcados.</strong>
-        </div>
-    @endif
 
     <form method="POST"
         action="{{ $modoAdmin ? route('admin.usuarios.store') : route('register') }}"

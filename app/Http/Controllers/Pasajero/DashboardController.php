@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
      public function index()
     {
-        return view('pasajero.dashboard'); // Vista para pasajero
+        return view('pasajero.dashboard'); 
     }
 }

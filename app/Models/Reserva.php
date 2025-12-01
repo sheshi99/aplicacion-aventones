@@ -19,11 +19,13 @@ class Reserva extends Model
         'estado',
     ];
 
-     public function ride()
+    // Una reserva pertenece a un ride
+    public function ride()
     {
         return $this->belongsTo(Ride::class, 'id_ride', 'id_ride');
     }
 
+    // Una reserva pertenece a un pasajero
     public function pasajero()
     {
         return $this->belongsTo(User::class, 'id_pasajero', 'id');

@@ -22,29 +22,6 @@ class DashboardController extends Controller
         return view('auth.register', ['esAdmin' => true]);
     }
 
-    /*public function storeAdmin(Request $request)
-    {
-    $request->validate([
-        'name' => 'required',
-        'apellido' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|confirmed',
-    ]);
-
-    $user = User::create([
-        'name' => $request->name,
-        'apellido' => $request->apellido,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'rol' => 'admin',      // 🔥 Rol fijo
-        'estado' => 'activo',  // 🔥 No requiere activación
-        'token' => null        // 🔥 No enviar token
-    ]);
-
-    return redirect()->route('admin.usuarios.index')->with('success', 'Administrador creado correctamente.');
-    }*/
-
-
 
     public function storeAdmin(Request $request)
     {   

@@ -5,6 +5,8 @@
 
     <h2 class="mb-4">Listado de Rides</h2>
 
+    <x-mensaje />
+
     <a href="{{ route('rides.create') }}" class="btn btn-primary mb-3">Crear Ride</a>
 
        <!-- Mensaje explicativo menos llamativo -->

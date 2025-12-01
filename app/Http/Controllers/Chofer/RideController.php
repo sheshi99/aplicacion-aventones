@@ -9,9 +9,13 @@ use App\Models\Vehiculo;
 
 class RideController extends Controller
 {
+   
     public function index()
     {
-        $rides = Ride::with('vehiculo', 'chofer')->get();
+        $rides = Ride::with('vehiculo', 'chofer')
+            ->where('id_chofer', auth()->id()) 
+            ->get();
+
         return view('rides.index', compact('rides'));
     }
 

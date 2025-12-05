@@ -29,16 +29,10 @@ class RegisteredUserController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'cedula' => ['required', 'regex:/^[0-9]{9,}$/'],
+            'cedula' => ['required', 'regex:/^[0-9]{9,}$/', 'unique:users,cedula'],
             'fecha_nacimiento' => ['required', 'date', 'before:today'],
             'telefono' => ['required', 'regex:/^[0-9]{8,}$/'],
-            'fotografia' => [
-                'required',
-                'file',
-                'image',
-                'mimes:jpg,jpeg,png',
-                'max:2048' 
-            ],
+            'fotografia' => ['required','file','image','mimes:jpg,jpeg,png','max:2048' ],
         ], [
             'cedula.regex' => 'La cédula debe contener al menos 9 números.',
             'telefono.regex' => 'El teléfono debe contener al menos 8 números.',

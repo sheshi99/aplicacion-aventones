@@ -5,7 +5,7 @@
     @endphp
 
 
-    <form method="POST"
+    <form method="POST" 
         action="{{ $modoAdmin ? route('admin.usuarios.store') : route('register') }}"
         enctype="multipart/form-data"
         class="mt-3">
@@ -46,11 +46,12 @@
         <div class="mb-3">
             <label for="email" class="form-label">Correo</label>
             <input type="email"
-                   class="form-control @error('email') is-invalid @enderror"
-                   id="email"
-                   name="email"
-                   value="{{ old('email') }}"
-                   required>
+                class="form-control @error('email') is-invalid @enderror"
+                id="email"
+                name="email"
+                value="{{ old('email') }}"
+                autocomplete="new-email"
+                required>
 
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -61,10 +62,11 @@
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
             <input type="password"
-                   class="form-control @error('password') is-invalid @enderror"
-                   id="password"
-                   name="password"
-                   required>
+                class="form-control @error('password') is-invalid @enderror"
+                id="password"
+                name="password"
+                autocomplete="new-password"
+                required>
 
             @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -149,11 +151,13 @@
                     name="rol">
 
                 @if($modoAdmin)
+                    {{-- Si es admin, solo puede crear administradores --}}
                     <option value="admin">Administrador</option>
+                @else
+                    {{-- Si NO es admin, puede registrarse como chofer o pasajero --}}
+                    <option value="chofer">Chofer</option>
+                    <option value="pasajero">Pasajero</option>
                 @endif
-
-                <option value="chofer">Chofer</option>
-                <option value="pasajero">Pasajero</option>
 
             </select>
 

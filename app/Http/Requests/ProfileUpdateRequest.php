@@ -20,14 +20,8 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($userId),
-            ],
-            'cedula' => ['required', 'regex:/^[0-9]{9,}$/'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($userId),],
+            'cedula' => ['required','regex:/^[0-9]{9,}$/',Rule::unique('users', 'cedula')->ignore($userId),],
             'telefono' => ['required', 'regex:/^[0-9]{8,}$/'],
             'fecha_nacimiento' => ['required', 'date', 'before:today'],
             'password' => ['nullable', 'confirmed', 'min:8'],
@@ -38,7 +32,7 @@ class ProfileUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'cedula.regex' => 'La cédula debe contener al menos 5 números.',
+            'cedula.regex' => 'La cédula debe contener al menos 9 números.',
             'telefono.regex' => 'El teléfono debe contener al menos 8 números.',
             'fecha_nacimiento.before' => 'La fecha de nacimiento no puede ser futura.',
             'fotografia.max' => 'La fotografía no debe superar los 2MB.',

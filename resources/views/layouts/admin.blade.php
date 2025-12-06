@@ -22,7 +22,8 @@
                     Usuarios
                 </a>
 
-                <a href="{{ route('admin.notificar.form') }}" class="btn btn-warning">
+                <a href="{{ route('admin.notificar.form') }}"
+                    class="text-white text-decoration-none {{ request()->routeIs('admin.notificar.form') ? 'fw-bold text-warning' : '' }}">
                     Notificar Choferes
                 </a>
 

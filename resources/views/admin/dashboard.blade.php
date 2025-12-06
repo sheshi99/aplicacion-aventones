@@ -3,16 +3,15 @@
 <div class="row g-3">
     <div class="col-md-12">
 
-    <x-mensaje />
-    
+        <x-mensaje />
+
         <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary mb-3">
             Agregar Administrador
         </a>
 
-
-        <table class="table table-bordered table-striped">
-            <thead class= "table-light">
-                <tr>
+        <x-table>
+            <x-slot:head>
+                <tr class="text-center text-white" style="background-color: #0077B6;">
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -22,11 +21,11 @@
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
-            </thead>
+            </x-slot:head>
 
-            <tbody>
+            <x-slot:body>
                 @foreach($usuarios as $user)
-                <tr>
+                <tr class="text-center align-middle">
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->apellido }}</td>
@@ -35,14 +34,13 @@
                         @if(!empty($user->fotografia))
                             <img src="{{ asset('storage/' . $user->fotografia) }}" 
                                 alt="{{ $user->name }}" 
-                                width="50" 
-                                height="50" 
-                                class="rounded-circle">
+                                width="80" 
+                                height="80" 
+                                class="rounded-circle object-fit-cover">
                         @else
                             <span>No hay foto</span>
                         @endif
                     </td>
-
                     <td>{{ ucfirst($user->rol) }}</td>
                     <td>{{ ucfirst($user->estado) }}</td>
 
@@ -66,9 +64,10 @@
                     </td>
                 </tr>
                 @endforeach
-            </tbody>
-        </table>
+            </x-slot:body>
+        </x-table>
+
     </div>
 </div>
-
 @endsection
+

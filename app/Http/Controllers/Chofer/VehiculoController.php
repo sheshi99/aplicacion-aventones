@@ -37,7 +37,7 @@ class VehiculoController extends Controller
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
             'anno' => 'required|integer|min:1900|max:' . date('Y'),
-            'capacidad_asientos' => 'required|integer|min:5|max:7',
+            'capacidad_asientos' => 'required|integer|min:2|max:5',
             'fotografia' => $vehiculo 
             ? 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048'  // edición: foto opcional
             : 'required|image|mimes:jpg,jpeg,png,gif|max:2048', // creación: foto obligatoria

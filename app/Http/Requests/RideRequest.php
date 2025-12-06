@@ -62,11 +62,15 @@ class RideRequest extends FormRequest
 
     private function validarCapacidad($vehiculo, $espacios)
     {
-        if ($vehiculo && $espacios > $vehiculo->capacidad_asientos) {
-            return "Los espacios superan la capacidad del vehículo.";
+        if ($vehiculo) {
+            $maxPasajeros = $vehiculo->capacidad_asientos - 1; // restamos 1 para el chofer
+            if ($espacios > $maxPasajeros) {
+                return "Los espacios superan la capacidad del vehículo ({$maxPasajeros} pasajeros).";
+            }
         }
         return null;
     }
+
 
     private function validarChoqueHorario($idVehiculo, $dia, $hora, $idRide = null)
     {

@@ -68,12 +68,6 @@
                 {{ __('Guardar') }}
             </button>
 
-            {{-- Mensaje de Guardado --}}
-            @if (session('status') === 'password-updated')
-                <div class="alert alert-success py-1 px-3 mb-0">
-                    {{ __('Guardado.') }}
-                </div>
-            @endif
         </div>
     </form>
 </section>

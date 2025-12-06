@@ -13,18 +13,7 @@
         @csrf
         @method('patch')
 
-        {{-- Mensajes --}}
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+        <x-mensaje />
 
         {{-- Nombre --}}
         <div class="mb-3">
@@ -101,9 +90,22 @@
         {{-- Fotografía --}}
         <div class="mb-3">
             <label for="fotografia" class="form-label">{{ __('Fotografía (JPG, PNG, max 2MB)') }}</label>
+            
+            {{-- Imagen actual --}}
+            @if(!empty($user->fotografia))
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $user->fotografia) }}" 
+                         alt="Foto de {{ $user->name }}" 
+                         width="120" 
+                         height="120" 
+                         class="rounded-circle">
+                </div>
+            @endif
+
+            {{-- Input para cambiar foto --}}
             <input type="file" id="fotografia" name="fotografia"
-                accept=".jpg,.jpeg,.png"
-                class="form-control @error('fotografia') is-invalid @enderror">
+                   accept=".jpg,.jpeg,.png"
+                   class="form-control @error('fotografia') is-invalid @enderror">
 
             @error('fotografia')
                 <div class="invalid-feedback">{{ $message }}</div>

@@ -16,11 +16,7 @@ class NotificarReservasPendientes extends Command
     public function handle()
     {
         // --- Obtener o preguntar minutos ---
-        $minutos = $this->argument('minutos');
-
-        if (!$minutos) {
-            $minutos = $this->ask("Ingrese los minutos");
-        }
+       $minutos = $this->argument('minutos');
 
         if (!is_numeric($minutos) || $minutos <= 0) {
             $this->error("Ingrese un número válido.");

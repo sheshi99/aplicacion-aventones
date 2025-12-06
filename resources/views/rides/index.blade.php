@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-4">
 
-    <h2 class="mb-4 text-primary fw-bold text-center">Listado de Rides</h2>
+    <h2 class="mb-4 text-primary fw-bold text-center">Mis Rides</h2>
 
     {{-- Mensajes de alerta --}}
     <x-mensaje />

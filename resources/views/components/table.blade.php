@@ -1,7 +1,7 @@
 <div class="card shadow-sm border-0 mb-4 rounded-3">
 
     <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
+        <table class="table table-hover table-sm align-middle mb-0">
             
             {{-- Encabezado --}}
             <thead class="table-primary text-white text-center">
@@ -40,9 +40,17 @@
         transform: translateY(-2px);
     }
 
-    /* Ajuste de padding para que la tabla respire */
+    /* Padding más compacto para la tabla */
     .table td, .table th {
-        padding: 0.75rem 1rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Truncado de texto largo para algunas columnas */
+    .table td.text-truncate {
+        max-width: 120px; /* ajusta según la columna */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 </style>
 

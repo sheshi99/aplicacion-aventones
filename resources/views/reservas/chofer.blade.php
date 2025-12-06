@@ -75,7 +75,6 @@
             <th>Costo</th>
             <th>Pasajero</th>
             <th>Estado</th>
-            <th class="text-center">Acciones</th>
         </tr>
     </x-slot:head>
 
@@ -94,9 +93,6 @@
                 <td>₡{{ number_format($reserva->ride->costo, 0) }}</td>
                 <td>{{ $reserva->pasajero->name }} {{ $reserva->pasajero->apellido }}</td>
                 <td>{{ ucfirst($reserva->estado) }}</td>
-                <td class="text-center">
-                    <span class="text-muted">---</span>
-                </td>
             </tr>
         @endforeach
     </x-slot:body>

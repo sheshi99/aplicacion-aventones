@@ -4,7 +4,9 @@
 <div class="container mt-4">
     
 
-    <h2 class="mb-3">Mis Vehículos</h2>
+   
+
+     <h2 class="mb-4 text-primary fw-bold text-center">Mis Vehículos</h2>
 
     <x-mensaje />
 
@@ -31,7 +33,8 @@
                         <div class="mt-3 d-flex justify-content-between">
 
                             <!-- Editar usando Route Model Binding -->
-                            <a href="{{ route('vehiculos.edit', $vehiculo) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ route('vehiculos.edit', $vehiculo) }}" 
+                               class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm">
                                 ✏ Editar
                             </a>
 
@@ -40,7 +43,8 @@
                                   onsubmit="return confirm('¿Está seguro de que desea eliminar este vehículo?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">🗑 Eliminar</button>
+                                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm">
+                                    🗑 Eliminar</button>
                             </form>
 
                         </div>

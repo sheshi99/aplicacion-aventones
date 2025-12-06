@@ -26,7 +26,7 @@ class ReservaController extends Controller
         return redirect()->back()->with('success','Reserva enviada');
     }
 
-    // Clasificación de las reservas
+
     private function clasificar($reservas)
     {
         $activas = [];
@@ -34,22 +34,28 @@ class ReservaController extends Controller
         $ahora = Carbon::now(); 
 
         foreach($reservas as $r) {
-            // Convertimos la fecha y hora del ride a un objeto Carbon
             $fechaHora = Carbon::parse($r->ride->dia . ' ' . $r->ride->hora);
 
-            if ($fechaHora->gte($ahora)) { // gte = mayor o igual
-                $activas[] = $r;
-            } else {
-                // Si estaba aceptada y ya pasó, marcar como realizado
+            // Canceladas siempre al historial
+            if ($r->estado === 'cancelada') {
+                $pasadas[] = $r;
+            } 
+            // Fecha pasada → historial
+            elseif ($fechaHora->lt($ahora)) {
                 if ($r->estado === 'aceptada') {
                     $r->estado = 'realizado';
                 }
                 $pasadas[] = $r;
+            } 
+            
+            else {
+                $activas[] = $r;
             }
         }
 
         return ['activas' => $activas, 'pasadas' => $pasadas];
     }
+
 
     // Mostrar las reservas del Pasajero
     public function reservasPasajero()

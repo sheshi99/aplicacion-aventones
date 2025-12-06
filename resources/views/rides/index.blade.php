@@ -44,14 +44,18 @@
                     <td class="d-flex gap-2">
                         @if($ride->reservas()->where('estado', 'aceptada')->count() == 0)
                             <!-- Mostrar botones solo si no hay reservas aceptadas -->
-                            <a href="{{ route('rides.edit', $ride->id_ride) }}" class="btn btn-warning btn-sm">
-                                Editar
+                            <a href="{{ route('rides.edit', $ride->id_ride) }}" 
+                                class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm">
+                                ✏ Editar
                             </a>
 
-                            <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST" onsubmit="return confirm('¿Eliminar este vehículo?')">
+                           <form action="{{ route('rides.destroy', $ride->id_ride) }}" method="POST"
+                                onsubmit="return confirm('¿Está seguro de que desea eliminar este ride?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">🗑 Eliminar</button>
+                                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm">
+                                    🗑 Eliminar
+                                </button>
                             </form>
                         @else
                             <!-- Ride con reservas aceptadas -->

@@ -36,7 +36,8 @@
                             </a>
 
                             <!-- Eliminar usando Route Model Binding -->
-                            <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" onsubmit="return confirm('¿Eliminar este vehículo?')">
+                            <form action="{{ route('vehiculos.destroy', $vehiculo) }}" method="POST" 
+                                  onsubmit="return confirm('¿Está seguro de que desea eliminar este vehículo?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">🗑 Eliminar</button>

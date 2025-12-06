@@ -18,7 +18,11 @@ class NotificacionController extends Controller
     public function ejecutar(Request $request)
     {
         $request->validate([
-            'minutos' => 'required|numeric|min:1'
+        'minutos' => 'required|integer|min:1'
+        ], [
+            'minutos.required' => 'Debe ingresar la cantidad de minutos.',
+            'minutos.integer'  => 'El valor debe ser un número válido.',
+            'minutos.min'      => 'El valor debe ser mayor a 0.',
         ]);
 
         $minutos = $request->minutos;

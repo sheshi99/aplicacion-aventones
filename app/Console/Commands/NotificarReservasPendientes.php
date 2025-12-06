@@ -19,11 +19,11 @@ class NotificarReservasPendientes extends Command
         $minutos = $this->argument('minutos');
 
         if (!is_numeric($minutos) || $minutos <= 0) {
-            $this->error("Ingrese un número válido.");
+            $this->info("Error: El valor ingresado no es válido.");
             return;
         }
 
-        $this->info("⏳ Buscando reservas pendientes con más de $minutos minutos...");
+        $this->info("⏳ Buscando reservas pendientes con más de $minutos minutos...\n\n");
 
          // --- Limite de creación ---
         $limite = Carbon::now()->subMinutes($minutos);
@@ -39,7 +39,7 @@ class NotificarReservasPendientes extends Command
             ->get();
 
         if ($reservas->isEmpty()) {
-            $this->info("✅ No hay reservas pendientes.");
+            $this->info("---> No hay reservas pendientes.");
             return;
         }
 
@@ -50,15 +50,13 @@ class NotificarReservasPendientes extends Command
 
             $chofer = $reserva->ride->chofer;
 
-            $this->info("📩 Enviando a: {$chofer->nombre} ({$chofer->email})...");
-
             $reserva->minutos = $minutos; 
 
             try {
                 Mail::to($chofer->email)
                     ->send(new NotificarChoferReservaPendiente($reserva));
 
-                $this->info("✅ Enviado");
+                $this->info("📤 Enviado a {$chofer->name} {$chofer->apellido} <{$chofer->email}>");
                 $total++;
             } catch (\Exception $e) {
                 $this->error("❌ Error: " . $e->getMessage());

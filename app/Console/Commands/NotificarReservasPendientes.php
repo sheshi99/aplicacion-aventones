@@ -15,8 +15,8 @@ class NotificarReservasPendientes extends Command
 
     public function handle()
     {
-        // --- Obtener o preguntar minutos ---
-       $minutos = $this->argument('minutos');
+        // --- Obtener minutos ---
+        $minutos = $this->argument('minutos');
 
         if (!is_numeric($minutos) || $minutos <= 0) {
             $this->error("Ingrese un número válido.");
@@ -52,7 +52,7 @@ class NotificarReservasPendientes extends Command
 
             $this->info("📩 Enviando a: {$chofer->nombre} ({$chofer->email})...");
 
-            $reserva->minutos = $minutos; // Igual que tu script
+            $reserva->minutos = $minutos; 
 
             try {
                 Mail::to($chofer->email)

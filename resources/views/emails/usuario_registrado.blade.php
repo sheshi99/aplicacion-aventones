@@ -7,7 +7,7 @@
 <body>
     <h1>¡Bienvenido a Aventones App!</h1>
 
-    <p>Hola {{ $user->nombre }} {{ $user->apellido }},</p>
+    <p>Hola {{ $user->name }} {{ $user->apellido }},</p>
 
     <p>Tu cuenta ha sido registrada exitosamente con el rol <strong>{{ $user->rol }}</strong>.</p>
 

@@ -53,6 +53,12 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
     Route::patch('/usuarios/{id}/estado', [AdminDashboard::class, 'cambiarEstado'])
         ->name('admin.usuarios.estado');
 
+    Route::get('/admin/notificar', [NotificarController::class, 'form'])
+        ->name('admin.notificar.form');
+
+    Route::post('/admin/notificar', [NotificarController::class, 'ejecutar'])
+        ->name('admin.notificar.ejecutar');
+
 });
 
 

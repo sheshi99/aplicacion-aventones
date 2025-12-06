@@ -21,10 +21,16 @@
                    class="text-white text-decoration-none {{ request()->routeIs('admin.panel') ? 'fw-bold text-warning' : '' }}">
                     Usuarios
                 </a>
+
+                <a href="{{ route('admin.notificar.form') }}" class="btn btn-warning">
+                    Notificar Choferes
+                </a>
+
                 <a href="{{ route('profile.edit') }}" 
                    class="text-white text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-warning' : '' }}">
                     Perfil
                 </a>
+                
                 <a href="{{ route('logout') }}" 
                    class="text-white text-decoration-none"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

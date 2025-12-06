@@ -9,6 +9,7 @@ use App\Http\Controllers\Chofer\VehiculoController;
 use App\Http\Controllers\Chofer\RideController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\RidePublicoController;
+use App\Http\Controllers\Admin\NotificacionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -53,10 +54,10 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
     Route::patch('/usuarios/{id}/estado', [AdminDashboard::class, 'cambiarEstado'])
         ->name('admin.usuarios.estado');
 
-    Route::get('/admin/notificar', [NotificarController::class, 'form'])
+    Route::get('/admin/notificar', [NotificacionController::class, 'form'])
         ->name('admin.notificar.form');
 
-    Route::post('/admin/notificar', [NotificarController::class, 'ejecutar'])
+    Route::post('/admin/notificar', [NotificacionController::class, 'ejecutar'])
         ->name('admin.notificar.ejecutar');
 
 });

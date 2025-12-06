@@ -33,16 +33,21 @@
             <div class="col-md-3">
                 <select name="campo" class="form-select">
                     <option value="">Ordenar por...</option>
-                    <option value="dia"     {{ request('campo')=='dia' ? 'selected' : '' }}>Fecha</option>
-                    <option value="salida"  {{ request('campo')=='salida' ? 'selected' : '' }}>Salida</option>
-                    <option value="llegada" {{ request('campo')=='llegada' ? 'selected' : '' }}>Llegada</option>
+                    <option value="dia"     
+                            {{ request('campo')=='dia' ? 'selected' : '' }}>Fecha</option>
+                    <option value="salida"  
+                            {{ request('campo')=='salida' ? 'selected' : '' }}>Salida</option>
+                    <option value="llegada" 
+                            {{ request('campo')=='llegada' ? 'selected' : '' }}>Llegada</option>
                 </select>
             </div>
 
             <div class="col-md-3">
                 <select name="direccion" class="form-select">
-                    <option value="asc"  {{ request('direccion')=='asc' ? 'selected' : '' }}>Ascendente</option>
-                    <option value="desc" {{ request('direccion')=='desc' ? 'selected' : '' }}>Descendente</option>
+                    <option value="asc"  
+                            {{ request('direccion')=='asc' ? 'selected' : '' }}>Ascendente</option>
+                    <option value="desc" 
+                            {{ request('direccion')=='desc' ? 'selected' : '' }}>Descendente</option>
                 </select>
             </div>
 
@@ -62,7 +67,7 @@
 
     {{-- TABLA DE RESULTADOS --}}
     <x-table>
-        {{-- Encabezado con color azul oscuro --}}
+        
         <x-slot:head>
             <tr class="text-white text-center" style="background-color: #0077B6;">
                 <th>Nombre</th>
@@ -100,18 +105,22 @@
                         <div class="d-flex justify-content-center gap-2 align-items-center">
                             @auth
                                 @if(auth()->user()->rol == 'pasajero')
-                                    <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('reservas.store', $ride->id_ride) }}" 
+                                          method="POST" class="d-inline">
                                         @csrf
-                                        <button type="submit" class="btn btn-success btn-sm rounded-pill px-3 shadow-sm">
+                                        <button type="submit" class="btn btn-success btn-sm 
+                                                rounded-pill px-3 shadow-sm">
                                             Reservar
                                         </button>
                                     </form>
                                 @endif
                             @endauth
                             @guest
-                                <form action="{{ route('reservas.intento', $ride->id_ride) }}" method="POST" class="d-inline">
+                                <form action="{{ route('reservas.intento', $ride->id_ride) }}" 
+                                      method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm rounded-pill px-3 shadow-sm">
+                                    <button type="submit" class="btn btn-success btn-sm 
+                                            rounded-pill px-3 shadow-sm">
                                         Reservar
                                     </button>
                                 </form>

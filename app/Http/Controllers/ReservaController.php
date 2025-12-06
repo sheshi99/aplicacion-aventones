@@ -11,8 +11,7 @@ use Carbon\Carbon;
 class ReservaController extends Controller
 {
 
-    // Acciones Pasajero 
- 
+    // Acción del pasajero
     public function store(Request $request, $id_ride)
     {
         $ride = Ride::findOrFail($id_ride);
@@ -27,12 +26,12 @@ class ReservaController extends Controller
         return redirect()->back()->with('success','Reserva enviada');
     }
 
-
+    // Clasificación de las reservas
     private function clasificar($reservas)
     {
         $activas = [];
         $pasadas = [];
-        $ahora = Carbon::now(); // fecha y hora actual
+        $ahora = Carbon::now(); 
 
         foreach($reservas as $r) {
             // Convertimos la fecha y hora del ride a un objeto Carbon
@@ -52,6 +51,7 @@ class ReservaController extends Controller
         return ['activas' => $activas, 'pasadas' => $pasadas];
     }
 
+    // Mostrar las reservas del Pasajero
     public function reservasPasajero()
     {
         $reservas = Reserva::with(['ride','ride.chofer'])
@@ -67,7 +67,7 @@ class ReservaController extends Controller
         ]);
     }
 
-
+    // Acción de pasajero
     public function cancelar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -95,8 +95,7 @@ class ReservaController extends Controller
     }
 
 
-    // Acciones chofer
-
+    // Mostrar reservas del chofer
     public function reservasChofer()
     {
         $reservas = Reserva::whereHas('ride', function($q){
@@ -114,7 +113,7 @@ class ReservaController extends Controller
         ]);
     }
 
-
+    // Acción del chofer
     public function aceptar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -149,7 +148,7 @@ class ReservaController extends Controller
     }
 
 
-
+    // Acción del chofer
     public function rechazar($id)
     {
         $reserva = Reserva::findOrFail($id);
@@ -177,31 +176,4 @@ class ReservaController extends Controller
         return back()->with('success', 'Reserva rechazada.');
     }
 
-
-
-    // Ver reservas activas (pasajero o chofer)
-    public function activas()
-    {
-        $reservas = Reserva::where('id_pasajero', Auth::id())
-            ->orWhereHas('ride', function($q){
-                $q->where('id_chofer', Auth::id());
-            })
-            ->whereIn('estado',['pendiente','aceptada'])
-            ->get();
-
-        return view('reservas.activas', compact('reservas'));
-    }
-
-    // Histórico
-    public function historico()
-    {
-        $reservas = Reserva::where('id_pasajero', Auth::id())
-            ->orWhereHas('ride', function($q){
-                $q->where('id_chofer', Auth::id());
-            })
-            ->whereIn('estado',['cancelada','rechazada'])
-            ->get();
-
-        return view('reservas.historico', compact('reservas'));
-    }
 }

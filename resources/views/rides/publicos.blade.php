@@ -7,13 +7,13 @@
 @section('content')
 <div class="container mt-4">
 
-    <h1 class="mb-4">Rides disponibles</h1>
+    <h1 class="mb-4 text-center text-primary fw-bold">Rides disponibles</h1>
 
     <x-mensaje />
 
-
+    {{-- FORMULARIO DE FILTRO --}}
     <form method="GET" action="{{ route('rides.publicos') }}" class="mb-4">
-        <div class="row g-3">
+        <div class="row g-3 align-items-end">
             <div class="col-md-4">
                 <input type="text" 
                        name="salida" 
@@ -46,18 +46,25 @@
                 </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 d-grid">
                 <button type="submit" class="btn btn-primary w-100">
                     Aplicar
                 </button>
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <a href="{{ route('rides.publicos') }}" class="btn btn-secondary w-100">
+                    Limpiar
+                </a>
             </div>
         </div>
     </form>
 
     {{-- TABLA DE RESULTADOS --}}
-    <table class="table table-bordered table-striped">
-        <thead class= "table-light">
-            <tr>
+    <x-table>
+        {{-- Encabezado con color azul oscuro --}}
+        <x-slot:head>
+            <tr class="text-white text-center" style="background-color: #0077B6;">
                 <th>Nombre</th>
                 <th>Salida</th>
                 <th>Llegada</th>
@@ -68,11 +75,12 @@
                 <th>Vehículo</th>
                 <th>Acciones</th>
             </tr>
-        </thead>
+        </x-slot:head>
 
-        <tbody>
-        @foreach ($rides as $ride)
-            <tr>
+        {{-- Cuerpo --}}
+        <x-slot:body>
+            @foreach ($rides as $ride)
+            <tr class="text-center align-middle">
                 <td>{{ $ride->nombre }}</td>
                 <td>{{ $ride->salida }}</td>
                 <td>{{ $ride->llegada }}</td>
@@ -87,33 +95,34 @@
                 </td>
                 <td>
                     @if ($ride->espacios <= 0)
-                        <span style="color: #555;">Completado</span>
+                        <span class="text-muted">Completado</span>
                     @else
-                        @auth
-                            @if(auth()->user()->rol == 'pasajero')
-                                <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST">
+                        <div class="d-flex justify-content-center gap-2 align-items-center">
+                            @auth
+                                @if(auth()->user()->rol == 'pasajero')
+                                    <form action="{{ route('reservas.store', $ride->id_ride) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm rounded-pill px-3 shadow-sm">
+                                            Reservar
+                                        </button>
+                                    </form>
+                                @endif
+                            @endauth
+                            @guest
+                                <form action="{{ route('reservas.intento', $ride->id_ride) }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">
+                                    <button type="submit" class="btn btn-success btn-sm rounded-pill px-3 shadow-sm">
                                         Reservar
                                     </button>
                                 </form>
-                            @endif
-                        @endauth
-                    @guest
-                        <form action="{{ route('reservas.intento', $ride->id_ride) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-sm">
-                                Reservar
-                            </button>
-                        </form>
-                    @endguest
+                            @endguest
+                        </div>
                     @endif
                 </td>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            @endforeach
+        </x-slot:body>
+    </x-table>
 
 </div>
 @endsection
-

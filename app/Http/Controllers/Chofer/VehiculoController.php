@@ -29,6 +29,7 @@ class VehiculoController extends Controller
             'numero_placa' => [
                 'required',
                 'max:20',
+                'regex:/^(?:[A-Z]{3}\d{3}|\d{6}|CL-?\d{6})$/',
                 // Si se pasa un vehículo, ignoramos su propia placa en la validación unique
                 Rule::unique('vehiculos', 'numero_placa')->ignore($vehiculo?->id_vehiculo, 
                             'id_vehiculo'),

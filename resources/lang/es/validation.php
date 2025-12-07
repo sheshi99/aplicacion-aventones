@@ -101,4 +101,12 @@ return [
         'id_vehiculo'=> 'vehículo',
         
     ],
+
+    'custom' => [
+        'numero_placa' => [
+            'regex' => 'El formato de la placa es inválido. Debe ser ABC123, 123456 o CL123456.',
+            'unique' => 'Esta placa ya está registrada.',
+            'required' => 'Debe ingresar el número de placa.',
+        ],
+    ],
 ];

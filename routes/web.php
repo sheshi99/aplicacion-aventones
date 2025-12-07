@@ -30,9 +30,6 @@ Route::get('/activar-cuenta/{token}', [ActivationController::class, 'activarCuen
 require __DIR__.'/auth.php';
 
 
-
-
-
 // ===================================
 //          ADMIN
 // ===================================
@@ -57,6 +54,7 @@ Route::middleware(['auth', 'rol:admin'])->prefix('admin')->group(function () {
     Route::get('/admin/notificar', [NotificacionController::class, 'form'])
         ->name('admin.notificar.form');
 
+    // Notificar reservas pendientes
     Route::post('/admin/notificar', [NotificacionController::class, 'ejecutar'])
         ->name('admin.notificar.ejecutar');
 

@@ -40,22 +40,23 @@ class ProfileController extends Controller
 
         // Manejar fotografía
         if ($request->hasFile('fotografia')) {
-            $archivo = $request->file('fotografia');
+        $archivo = $request->file('fotografia');
 
-            $nombreLimpio = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->id . '_' . $user->name);
+        $nombreLimpio = preg_replace('/[^A-Za-z0-9_\-]/', '_', $user->cedula . '_' . $user->name . '_' . $user->apellido);
 
-            $nombreArchivo = $nombreLimpio . '.' . $archivo->getClientOriginalExtension();
-            $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
+        $nombreArchivo = $nombreLimpio . '.' . $archivo->getClientOriginalExtension();
 
-            $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
-
-            // Borrar foto anterior si existe
-            if ($user->fotografia && Storage::disk('public')->exists($user->fotografia)) {
-                Storage::disk('public')->delete($user->fotografia);
-            }
-
-            $user->fotografia = $ruta;
+        // Borrar la foto anterior ANTES de guardar la nueva
+        if ($user->fotografia && Storage::disk('public')->exists($user->fotografia)) {
+            Storage::disk('public')->delete($user->fotografia);
         }
+
+        // Guardar nueva foto SOLO UNA VEZ
+        $ruta = $archivo->storeAs('usuarios', $nombreArchivo, 'public');
+
+        $user->fotografia = $ruta;
+    }
+
 
         $user->save();
 

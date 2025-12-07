@@ -12,7 +12,6 @@
         <x-table>
             <x-slot:head>
                 <tr class="text-center text-white" style="background-color: #0077B6;">
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo</th>
@@ -26,7 +25,6 @@
             <x-slot:body>
                 @foreach($usuarios as $user)
                 <tr class="text-center align-middle">
-                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->apellido }}</td>
                     <td>{{ $user->email }}</td>

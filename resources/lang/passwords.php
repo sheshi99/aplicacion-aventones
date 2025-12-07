@@ -7,5 +7,6 @@ return [
     'throttled' => 'Por favor espera antes de volver a intentarlo.',
     'token'     => 'Este token de restablecimiento de contraseña es inválido.',
     'user'      => 'No encontramos un usuario con ese correo electrónico.',
+    'password-updated'   => 'Tu contraseña ha sido actualizada correctamente.', 
 
 ];

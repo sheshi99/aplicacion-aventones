@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Panel Pasajero')</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -20,21 +21,29 @@
             <!-- Menú -->
             <nav class="d-flex gap-5">
                 <a href="{{ route('pasajero.panel') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('pasajero.panel') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none 
+                          {{ request()->routeIs('pasajero.panel') ? 'fw-bold text-primary' : '' }}">
                     Dashboard
                 </a>
+
                 <a href="{{ route('rides.publicos') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('rides.publicos') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none 
+                          {{ request()->routeIs('rides.publicos') ? 'fw-bold text-primary' : '' }}">
                     Buscar Rides
                 </a>
+
                 <a href="{{ route('reservas.mias') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('reservas.mias') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none 
+                         {{ request()->routeIs('reservas.mias') ? 'fw-bold text-primary' : '' }}">
                     Mis Reservas
                 </a>
+
                 <a href="{{ route('profile.edit') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-primary' : '' }}">
+                   class="text-white text-decoration-none 
+                          {{ request()->routeIs('profile.edit') ? 'fw-bold text-primary' : '' }}">
                     Perfil
                 </a>
+                
                 <a href="{{ route('logout') }}" 
                    class="text-white text-decoration-none"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

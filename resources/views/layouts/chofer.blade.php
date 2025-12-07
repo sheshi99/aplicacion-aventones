@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Panel Chofer')</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -20,25 +21,35 @@
             <!-- Menú -->
             <nav class="d-flex gap-5">
                 <a href="{{ route('chofer.panel') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('chofer.panel') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                          {{ request()->routeIs('chofer.panel') ? 'fw-bold text-warning' : '' }}">
                     Dashboard
                 </a>
+
                 <a href="{{ route('vehiculos.index') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('vehiculos.index') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                         {{ request()->routeIs('vehiculos.index') ? 'fw-bold text-warning' : '' }}">
                     Mis Vehículos
                 </a>
+
                 <a href="{{ route('rides.index') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('rides.index') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                        {{ request()->routeIs('rides.index') ? 'fw-bold text-warning' : '' }}">
                     Mis Rides
                 </a>
+
                 <a href="{{ route('reservas.chofer') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('reservas.chofer') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                         {{ request()->routeIs('reservas.chofer') ? 'fw-bold text-warning' : '' }}">
                     Mis Reservas
                 </a>
+
                 <a href="{{ route('profile.edit') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                        {{ request()->routeIs('profile.edit') ? 'fw-bold text-warning' : '' }}">
                     Perfil
                 </a>
+                
                 <a href="{{ route('logout') }}" 
                    class="text-white text-decoration-none"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

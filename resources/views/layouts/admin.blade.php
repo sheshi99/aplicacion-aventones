@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Panel Administrador')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
@@ -18,17 +19,20 @@
             <!-- Menú -->
             <nav class="d-flex gap-5">
                 <a href="{{ route('admin.panel') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('admin.panel') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none {{ request()->routeIs('admin.panel') ? 
+                         'fw-bold text-warning' : '' }}">
                     Usuarios
                 </a>
 
                 <a href="{{ route('admin.notificar.form') }}"
-                    class="text-white text-decoration-none {{ request()->routeIs('admin.notificar.form') ? 'fw-bold text-warning' : '' }}">
+                    class="text-white text-decoration-none 
+                        {{ request()->routeIs('admin.notificar.form') ? 'fw-bold text-warning' : '' }}">
                     Notificar Choferes
                 </a>
 
                 <a href="{{ route('profile.edit') }}" 
-                   class="text-white text-decoration-none {{ request()->routeIs('profile.edit') ? 'fw-bold text-warning' : '' }}">
+                   class="text-white text-decoration-none 
+                         {{ request()->routeIs('profile.edit') ? 'fw-bold text-warning' : '' }}">
                     Perfil
                 </a>
                 

@@ -17,7 +17,8 @@ class UsuarioRegistrado extends Mailable
     {
         $this->user = $user;
     }
-
+    
+    // Define cómo se construye el correo
     public function build()
     {
         return $this->subject('Activa tu cuenta en Aventones App')

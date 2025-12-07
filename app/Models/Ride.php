@@ -13,7 +13,7 @@ class Ride extends Model
     use HasFactory;
     protected $table = 'rides';
     protected $primaryKey = 'id_ride';
-    public $timestamps = false; // No tiene created_at ni updated_at
+    public $timestamps = false; 
 
     protected $fillable = [
         'id_chofer',

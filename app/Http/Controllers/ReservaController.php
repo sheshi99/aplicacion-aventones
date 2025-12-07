@@ -16,7 +16,6 @@ class ReservaController extends Controller
     {
         $ride = Ride::findOrFail($id_ride);
 
-        // Crear reserva
         Reserva::create([
             'id_ride' => $id_ride,
             'id_pasajero' => Auth::id(),

@@ -50,18 +50,19 @@ class DashboardController extends Controller
             'fotografia.mimes' => 'Solo se permiten imágenes JPG, JPEG o PNG.',
         ]);
 
-        // CALCULAR EDAD
-        // CALCULAR EDAD
-            $fechaNacimiento = new \DateTime($request->fecha_nacimiento);
-            $edad = (new \DateTime())->diff($fechaNacimiento)->y;
 
-            // VALIDACIÓN PARA ADMIN
-            if ($edad < 18) {
-                return back()->withErrors([
-                    'fecha_nacimiento' => 'Debe tener al menos 18 años para registrarse como administrador.'
-                ])->withInput();
-            }
-        // CREAR USUARIO
+        // Calcular edad
+        $fechaNacimiento = new \DateTime($request->fecha_nacimiento);
+        $edad = (new \DateTime())->diff($fechaNacimiento)->y;
+
+        // Validación mayor de edad
+        if ($edad < 18) {
+            return back()->withErrors([
+                'fecha_nacimiento' => 'Debe tener al menos 18 años para registrarse como administrador.'
+            ])->withInput();
+        }
+
+        // Crear usuario
         $user = User::create([
             'name' => $request->name,
             'apellido' => $request->apellido,
@@ -70,12 +71,12 @@ class DashboardController extends Controller
             'cedula' => $request->cedula,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'telefono' => $request->telefono,
-            'rol' => 'admin',      // 🔥 Rol fijo
-            'estado' => 'activo',  // 🔥 No requiere activación
-            'token' => null        // 🔥 No enviar token
+            'rol' => 'admin',      
+            'estado' => 'activo',  
+            'token' => null        
         ]);
 
-        // GUARDAR FOTOGRAFÍA
+        // Guardar fotografía
         if ($request->hasFile('fotografia')) {
 
             $extension = $request->file('fotografia')->getClientOriginalExtension();
@@ -118,7 +119,6 @@ class DashboardController extends Controller
         } else {
             $user->estado = 'inactivo';
         }
-
 
             $user->save();
             return back()->with('success', 'Estado del usuario actualizado correctamente.');

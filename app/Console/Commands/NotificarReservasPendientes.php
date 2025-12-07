@@ -13,6 +13,7 @@ class NotificarReservasPendientes extends Command
     protected $signature = 'notificar:reservas {minutos?}';
     protected $description = 'Notifica reservas pendientes con más de X minutos';
 
+    // Lógica del comando 
     public function handle()
     {
         // --- Obtener minutos ---

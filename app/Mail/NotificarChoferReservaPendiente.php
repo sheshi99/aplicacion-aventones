@@ -2,10 +2,11 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Bus\Queueable; // Trait que permite poner el correo en cola
+use Illuminate\Mail\Mailable; // Clase base de Laravel para crear correos
+use Illuminate\Queue\SerializesModels; // Trait que serializa modelos al enviarlos en correos
 use App\Models\Reserva;
+
 
 class NotificarChoferReservaPendiente extends Mailable
 {
@@ -15,9 +16,10 @@ class NotificarChoferReservaPendiente extends Mailable
 
     public function __construct(Reserva $reserva)
     {
-        $this->reserva = $reserva;
+        $this->reserva = $reserva; // Guarda la reserva para usarla en la vista del correo
     }
 
+    // Define cómo se construye el correo
     public function build()
     {
         return $this->subject("🚗 Tienes reservas pendientes")

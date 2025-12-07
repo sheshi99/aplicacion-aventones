@@ -25,7 +25,7 @@ class RideController extends Controller
         return view('rides.create', compact('vehiculos'));
     }
 
-
+    
     public function store(RideRequest $request)
     {
         $vehiculo = Vehiculo::find($request->id_vehiculo);
@@ -88,6 +88,7 @@ class RideController extends Controller
 
     public function destroy(Ride $ride)
     {
+        // Verificar si tiene reservas asociadas
         if ($ride->reservas()->count() > 0) {
             return back()->with('error', 'No se puede eliminar este ride porque tiene reservas.');
         }

@@ -17,7 +17,7 @@ class VehiculoController extends Controller
         return view('vehiculos.index', compact('vehiculos'));
     }
 
-    // FORMULARIO CREAR
+    
     public function create()
     {
         return view('vehiculos.create');
@@ -71,7 +71,7 @@ class VehiculoController extends Controller
     }
 
 
-    // CREAR VEHICULO
+    // Crear un vehículo
     public function store(Request $request)
     {
         $request->merge(['numero_placa' => strtoupper($request->numero_placa)]);
@@ -94,13 +94,13 @@ class VehiculoController extends Controller
         return redirect()->route('vehiculos.index')->with('success', 'Vehículo creado');
     }
 
-    // FORMULARIO EDITAR
+    // Formulario edición
     public function edit(Vehiculo $vehiculo)
     {
         return view('vehiculos.edit', compact('vehiculo'));
     }
 
-    // EDITAR VEHICULO
+    // Editar un vehículo
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $request->merge(['numero_placa' => strtoupper($request->numero_placa)]);
@@ -122,8 +122,7 @@ class VehiculoController extends Controller
         return redirect()->route('vehiculos.index')->with('success', 'Vehículo actualizado');
     }
 
-    // ELIMINAR VEHICULO
-
+    
     public function destroy(Vehiculo $vehiculo)
     {
         // Verificar si tiene rides asociados

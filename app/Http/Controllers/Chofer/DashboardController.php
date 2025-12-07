@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
      public function index()
     {
-        return view('chofer.dashboard'); // resources/views/chofer/dashboard.blade.php
+        return view('chofer.dashboard'); 
     }
 }
 

@@ -13,8 +13,8 @@
     <header class="bg-primary text-white py-3">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <!-- Logo o Título -->
-            <h2 class="h5 m-0">Panel Administrador</h2>
+            <!-- Título -->
+            <h2 class="h5 m-0">Panel Administrador de {{ auth()->user()->name }}</h2>
 
             <!-- Menú -->
             <nav class="d-flex gap-5">

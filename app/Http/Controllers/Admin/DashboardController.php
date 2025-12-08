@@ -51,18 +51,18 @@ class DashboardController extends Controller
         ]);
 
 
-        // Calcular edad
+        // Calcular edad admin
         $fechaNacimiento = new \DateTime($request->fecha_nacimiento);
         $edad = (new \DateTime())->diff($fechaNacimiento)->y;
 
-        // Validación mayor de edad
+        // Validación mayor de edad del admin
         if ($edad < 18) {
             return back()->withErrors([
                 'fecha_nacimiento' => 'Debe tener al menos 18 años para registrarse como administrador.'
             ])->withInput();
         }
 
-        // Crear usuario
+        // Crear usuario admin
         $user = User::create([
             'name' => $request->name,
             'apellido' => $request->apellido,
@@ -76,7 +76,7 @@ class DashboardController extends Controller
             'token' => null        
         ]);
 
-        // Guardar fotografía
+        // Guardar fotografía admin
         if ($request->hasFile('fotografia')) {
 
             $extension = $request->file('fotografia')->getClientOriginalExtension();

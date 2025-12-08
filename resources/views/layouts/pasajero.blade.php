@@ -16,7 +16,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <!-- Logo o Título -->
-            <h2 class="h5 m-0">Panel Pasajero</h2>
+            <h2 class="h5 m-0">Panel Pasajero de {{ auth()->user()->name }}</h2>
 
             <!-- Menú -->
             <nav class="d-flex gap-5">
